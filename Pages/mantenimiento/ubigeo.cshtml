@@ -1,0 +1,243 @@
+﻿@page
+@model MRE.Pages.mantenimiento.ubigeoModel
+@{
+}
+<script src="~/app/services/service.catalogoitem.js"></script>
+<script src="~/app/services/service.ubigeo.js"></script>
+<script src="~/app/pages/mantenimiento/ubigeo.js"></script>
+<style>
+    .container-fluid {
+        width: 100% !important;        
+    }
+
+    .container {
+        width: 100% !important;
+    }
+</style>
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="titulo">Mantenimiento Ubigeo <i class="bi-newspaper"></i></h3>
+        </div>
+
+    </div>
+
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <div class="row">
+                    <div class="col-md-9   ">
+                        <h5 class="mb-0">
+                            Búsqueda avanzada
+                            <button class="btn btn-light btn-sm " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="bi-arrow-down-square-fill"></i>
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="col-md-3 text-end   ">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-danger  btn-sm" title="buscar" id="btnBuscar">
+                                <i class="bi-search"></i> Buscar
+                            </button>
+                            <button class="btn  btn-sm btn-dark" id="btnLimpiar">
+                                <i class="bi-arrow-clockwise"></i> Limpiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row   m-b-a">
+                        <div class="col-md-3">
+                            <label>Departamento</label>
+                            <select id="cboUbigeoDepartamentoFiltro" class="form-control">
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Provincia</label>
+                            <select id="cboUbigeoProvinciaFiltro" class="form-control">
+                                <option value="">-- Seleccione Provincia --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Distrito</label>
+                            <select id="cboUbigeoDistritoFiltro" class="form-control">
+                                <option value="">-- Seleccione Distrito --</option>
+                            </select>
+                        </div>
+                        @* <div class="col-md-2">
+                            <label>Estado</label>
+                            <input class="form-control" type="text" id="txtEstadoFiltro">
+                        </div> *@
+                        <div class="col-md-2">
+                            <label>Situación</label>
+                            <select id="cboSituacionFiltro" class="form-control">
+                                <option value="">Todos</option>
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid tablelist">
+                <div class="row listpro">
+                    <div class="col-md-6">
+                        <h5 class="titwhite">
+                            Resultados de búsqueda
+                        </h5>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-light   mt-2  btn-sm" id="btnAgregar" title="Agregar nuevo">
+                                <i class="bi bi-file-earmark-plus-fill"></i> Nuevo Registro
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="grid" class="table table-striped   table-hover nowrap" style="width:100%">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Ubigeo</th>                                    
+                                    <th>Departamento</th>
+                                    <th>Provincia</th>
+                                    <th>Distrito</th>
+                                    <th>Estado</th>
+                                    <th>Activo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitle">Registrar nuevo</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3"> Datos del Ubigeo</legend>
+                        <div class="row">
+                            <input type="hidden" id="flagEdit">
+                            <input type="hidden" id="hcodigo">
+                            <div class="col-md-12">
+                                <label>Tipo Ingreso </label> <label style="color:red">(*)</label>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipoIngreso" id="rdbDepartamento" value="1" checked>
+                                    <label class="form-check-label" for="rdbDepartamento">
+                                        Departamento
+                                    </label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipoIngreso" id="rdbProvincia" value="2">
+                                    <label class="form-check-label" for="rdbProvincia">
+                                        Provincia
+                                    </label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipoIngreso" id="rdbDistrito" value="3">
+                                    <label class="form-check-label" for="rdbDistrito">
+                                        Distrito
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="rowUbigeoDepartamento">
+                            <div class="col-md-12">
+                                @* <label>Codigo Ubigeo </label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtUbigeo" /> *@
+                                <label>Departamento</label>
+                                <select id="cboDepartamento" class="form-control">
+                                    <option value="">Seleccione</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row" id="rowDepartamento">
+                            <div class="col-md-12">
+                                <label>Departamento </label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtDepartamento" />
+                            </div>
+                        </div>
+
+                        <div class="row" id="rowUbigeoProvincia">
+                            <div class="col-md-12">
+                                @* <label>Codigo Ubigeo </label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtUbigeo" /> *@
+                                <label>Provincia</label>
+                                <select id="cboProvincia" class="form-control">
+                                    <option value="">Seleccione</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row" id="rowProvincia">
+                            <div class="col-md-12">
+                                <label>Provincia </label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtProvincia" />
+                            </div>
+                        </div>
+                        <div class="row" id="rowDistrito">
+                            <div class="col-md-12">
+                                <label>Distrito </label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtDistrito" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Estado </label>
+                                <input type="text" class="form-control" id="txtEstado" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Activo</label>
+                                <select id="cboActivo" class="form-select">
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 10px">
+                            <br />
+                            <label style="color:red">Datos Obligatorios (*)</label>
+                        </div>
+                    </fieldset>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabar" class="btn btn-primary"><i class="bi bi-check-lg"></i> Grabar</button>
+                    <button type="button" id="btnCerrar" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

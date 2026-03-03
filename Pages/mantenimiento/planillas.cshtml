@@ -1,0 +1,503 @@
+﻿@page
+@model MRE.Pages.mantenimiento.planillasModel
+@{
+}
+<script src="~/app/services/service.anio.js"></script>
+<script src="~/app/services/service.programa.js"></script>
+<script src="~/app/services/service.planillas.js"></script>
+<script src="~/app/pages/mantenimiento/planillas.js"></script>
+<style>
+    .container-fluid {
+        width: 100% !important;
+    }
+
+    .container {
+        width: 100% !important;
+    }
+</style>
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="titulo">Pnailla de Trabajadores <i class="bi-newspaper"></i></h3>
+        </div>
+
+    </div>
+
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <div class="row">
+                    <div class="col-md-9   ">
+                        <h5 class="mb-0">
+                            Búsqueda avanzada
+                            <button class="btn btn-light btn-sm " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="bi-arrow-down-square-fill"></i>
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="col-md-3 text-end   ">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-danger  btn-sm" title="buscar" id="btnBuscar">
+                                <i class="bi-search"></i> Buscar
+                            </button>
+                            <button class="btn  btn-sm btn-dark" id="btnLimpiar">
+                                <i class="bi-arrow-clockwise"></i> Limpiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row   m-b-a">
+                        <div class="col-md-2">
+                            <label>Año de Programación</label>
+                            <select id="cboAnioFiltro" class="form-control">
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label>N° Documento </label>
+                            <input class="form-control" type="text" id="txtNroDocumentoFiltro">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Apellidos </label>
+                            <input class="form-control" type="text" id="txtApellidosFiltro">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Descripción Acciones</label>
+                            <input class="form-control" type="text" id="txtDescripcionFiltro">
+                        </div>
+                        @*   <div class="col-md-2">
+                        <label>Codigo Prioritarios</label>
+                        <input class="form-control" type="text" id="txtPrioritariosFiltro">
+                        </div> *@
+                        <div class="col-md-2">
+                            <label>Estado</label>
+                            <input class="form-control" type="text" id="txtEstadoFiltro">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Situación</label>
+                            <select id="cboSituacionFiltro" class="form-control">
+                                <option value="">Todos</option>
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid tablelist">
+                <div class="row listpro">
+                    <div class="col-md-6">
+                        <h5 class="titwhite">
+                            Resultados de búsqueda
+                        </h5>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-light   mt-2  btn-sm" id="btnAgregar" title="Agregar nuevo">
+                                <i class="bi bi-file-earmark-plus-fill"></i> Nuevo Registro
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="gridPlainllas" class="table table-striped   table-hover nowrap" style="width:100%">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Año</th>
+                                    <th>Mes</th>
+                                    <th>Prog.</th>
+                                    <th>Descripción Programa</th>
+                                    <th>Producto</th>
+                                    <th>Descripción Programa</th>
+                                    @* <th>Actividad</th> *@
+                                    <th>Descripción Actividad</th>
+                                    <th>Meta</th>
+                                    @* <th>Finalidad</th> *@
+                                    @* <th>Descripción Finalidad</th> *@
+                                    <th>C. Costos</th>
+                                    <th>Descripcion Costos</th> 
+                                    <th>Apellidos y Nombres</th>
+                                    <th>Estado</th>
+                                    <th>Activo</th> 
+                                    <th>Acciones</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    @* ** registro Planillas ** *@
+    <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitle">Registrar nuevo</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">
+
+                        <div class="row">
+                            <input type="hidden" id="flagEdit">
+                            <input type="hidden" id="hcodigo">
+                            <div class="col-md-3">
+                                <label>Año Presupuestal </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboAnio" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <fieldset class="border rounded-3 p-3">
+                            <legend class="float-none w-auto px-3">Datos Cadena Programática</legend>
+                            <div class="row">                                
+                                <div class="col-md-12">
+                                    <label>Programa Presupuestal: </label><label style="color:red">(*)</label>                                    
+                                    <select id="cboPrograma" class="form-select"> </select>
+                                        @* <option value="0">SELECCIONAR</option>
+                                        <option value="1">0062. OPTIMIZACION DE LA POLITICA DE PROTECCION Y ATENCION A LAS COMUNIDADES PERUANAS EN EL EXTERIOR</option>
+                                        <option value="2">0030. TRABAJO EN EQUIPO</option> 
+                                        </select>*@
+                                </div>
+                            </div>
+                            <div class="row">                                
+                                <div class="col-md-12">
+                                    <label> Producto Presupuestal: </label><label style="color:red">(*)</label>
+                                    <select id="cboProucto" class="form-select"> </select>
+                                        @* <option value="0">SELECCIONAR</option>
+                                        <option value="1">3000144. PERSONAS RECIBEN SERVICIOS CONSULARES EN EL EXTERIOR</option>                                        
+                                    </select> *@
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label> Actividad Presupuestal: </label><label style="color:red">(*)</label>
+                                    <select id="cboActividad" class="form-select"> </select>
+                                        @* <option value="0">SELECCIONAR</option>
+                                        <option value="1">5004339. ATENCION DE TRAMITES CONSULARES Y DIFUSION DE DERECHOS Y DEBERES DE LOS MIGRANTES</option>
+                                    </select> *@
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label> Meta Presupuestal: </label><label style="color:red">(*)</label>
+                                    <select id="cboMeta" class="form-select">
+                                        <option value="0">SELECCIONAR</option>
+                                        <option value="1">2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label> Finalidad Presupuestal: </label><label style="color:red">(*)</label>
+                                    <select id="cboFinalidad" class="form-select"> </select>
+                                        @* <option value="0">SELECCIONAR</option>
+                                        <option value="1">07175</option>
+                                    </select> *@
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="border rounded-3 p-3">
+                            <legend class="float-none w-auto px-3"> Datos del Trabajador</legend>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label> Tipo de Docuento </label><label style="color:red">(*)</label>
+                                    <select id="cboTipodeDocuento" class="form-select">
+                                        <option value="1">DNI</option>
+                                        <option value="2">CARNET EXTRANJERIA</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Nro. Documento</label><label style="color:red">(*)</label>
+                                    <input type="text" class="form-control" id="txtNroDocumento" />
+                                </div>
+                            </div>
+                            <div class="row">                                
+                                <div class="col-md-12">
+                                    <label>Centro de Costos </label><label style="color:red">(*)</label>
+                                    <select id="cboCentroCostos" class="form-select"> </select>
+                                    @* <option value="0">SELECCIONAR</option>
+                                        <option value="1">02.12.02</option>
+                                        <option value="2">02.03.03</option>
+                                    </select> *@
+                                </div>
+                            </div>
+                            @* <div class="row">                                
+                                <div class="col-md-12">
+                                    <label>Descripción del Centro de Costos</label><label style="color:red">(*)</label>
+                                    <input type="text" class="form-control" id="txtDescripcionCostos" />
+                                </div>
+                            </div> *@
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Apellidos y Nombres</label><label style="color:red">(*)</label>
+                                    <input type="text" class="form-control" id="txtApellidosNombres" />
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Mes</label>
+                                <select id="cboMes" class="form-select">
+                                    <option value="0">SELECCIONAR</option>
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Setiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                                @* <input type="text" class="form-control" id="txtMes" /> *@
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Estado </label>
+                                <input type="text" class="form-control" id="txtEstado" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Activo</label>
+                                <select id="cboActivo" class="form-select">
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 10px">
+                            <br />
+                            <label style="color:red">Datos Obligatorios (*)</label>
+                        </div>
+                    </fieldset>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabar" class="btn btn-primary"><i class="bi bi-check-lg"></i> Grabar</button>
+                    <button type="button" id="btnCerrar" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* ** registro Planillas Detalle ** *@
+    <div class="modal fade" id="modalPlanillaDetalle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitle">Conceptos del Trabajador</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">                        
+
+                        <div class="row">
+                            <input type="hidden" id="flagEdit">
+                            <input type="hidden" id="hcodigo">
+                            <div class="col-md-4">
+                                <label>Año Presupuestal </label> 
+                                <input type="text" class="form-control" id="txtAnioCabecera" readonly />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Producto </label>
+                                <input type="text" class="form-control" id="txtDescripcioProducto" readonly />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Actividad</label>
+                                <input type="text" class="form-control" id="txtDescripcioActividad" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Meta</label>
+                                <input type="text" class="form-control" id="txtDescripcionMeta" readonly />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Finalidad </label>
+                                <input type="text" class="form-control" id="txtDescripcionFinalidad" readonly />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Centro Costos</label>
+                                <input type="text" class="form-control" id="txtDescripcionCentroCostos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Apellidos y Nombres</label>
+                                <input type="text" class="form-control" id="txtApellidosNombresCabecera" readonly />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Tipo de Docuemnto </label>
+                                <input type="text" class="form-control" id="txtTipoDocuemnto" readonly />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Nro Documento</label>
+                                <input type="text" class="form-control" id="txtNroDocuemnto" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">                            
+                            <div class="col-md-4">
+                                <label>Estado </label>
+                                <input type="text" class="form-control" id="txtEstadoCabecera" readonly />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Activo</label>
+                                <input type="text" class="form-control" id="txtActivoCabecera" readonly />                                
+                            </div>
+                            <div class="col-md-4">
+                                <label>Periodo</label>
+                                <input type="text" class="form-control" id="txtPeriodoMes" readonly />
+                            </div>
+                        </div>
+                        @* <div class="row" style="padding-top: 10px">
+                        <br />
+                        <label style="color:red">Datos Obligatorios (*)</label>
+                        </div> *@
+                    </fieldset>
+                    <div class="card mt-3 mb-3">
+                        <legend class="float-none w-auto px-3"> Listado de Conceptos</legend>
+                        <div class="row">
+                            <div class="col-md-2 text-end">
+                            <button class="btn btn-sm btn-dark" id="btnNuevoConcepto">
+                                <i class="bi bi-file-earmark-plus-fill"></i> Nuevo Registro
+                            </button>
+                            </div>
+                        </div>
+
+                        @* <div class="card-body" > *@
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="gridDetalle" class="table table-hover nowrap" style="width:100%">
+                                    <thead class="thead-uarm">
+                                        <tr>                                            
+                                            <th>N°</th>
+                                            <th>Especifica</th>
+                                            <th>Descripción Especifica</th>
+                                            @* <th>Periodo</th> *@
+                                            <th>Importe</th>
+                                            <th>Activo</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @* </div> *@
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @* <button type="button" id="btnGrabar" class="btn btn-primary"><i class="bi bi-check-lg"></i> Grabar</button> *@
+                    <button type="button" id="btnCerrarDetalle" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* ** Conceptos ** *@
+    <div class="modal fade" id="modalConceptos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" style="margin-top: -10vh;">
+            <div class="modal-content mt-1">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitleConceptos">Registrar Nuevo Concepto</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3"> Datos de Tareas:</legend>
+                        <div class="row">
+                            <input type="hidden" id="flagEditConceptos">
+                            <input type="hidden" id="hidconceptos">                                                        
+                            <div class="col-md-3">
+                                <label>N° Planilla: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">                                
+                                <input type="text" class="form-control" id="txtIdPlanilla" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Id Planilla Detalle: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtIdPlanillaDetalle" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Especifica: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboEspecificaGasto" class="form-select"> </select>
+                            </div>
+                        </div>                        
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Descripción Especifica: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="txtDescripciónEspecifica" rows="3" readonly ></textarea>
+                            </div>
+                        </div>           
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Importe: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtImporte" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Activo</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboActivoConcepto" class="form-select">
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabarConcepto" class="btn btn-primary"><i class="bi bi-check-lg"></i> Grabar</button>
+                    <button type="button" id="btnCerrarConcepto" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+

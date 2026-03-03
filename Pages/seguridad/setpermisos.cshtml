@@ -1,0 +1,218 @@
+﻿@page
+@model MRE.Pages.seguridad.setpermisosModel
+@{
+}
+<script src="~/app/services/service.sistema.js"></script>
+<script src="~/app/services/service.catalogoitem.js"></script>
+<script src="~/app/services/service.paises.js"></script>
+<script src="~/app/services/service.organismo.js"></script>
+<script src="~/app/services/service.setpermisos.js"></script>
+<script src="~/app/services/service.rol.js"></script>
+<script src="~/app/services/service.usuario.js"></script>
+@* <script src="~/app/services/service.grupopaisesatencion.js"></script> *@
+<script src="~/app/services/service.setpermisosgrupos.js"></script>
+<script src="~/app/pages/seguridad/setpermisos.js"></script>
+<script src="~/app/services/service.ubigeo.js"></script>
+<script src="~/app/services/service.programacion.js"></script>
+<script src="~/app/services/service.programacion_actividades.js"></script>
+<style>
+    .container-fluid {
+        width: 100% !important;
+    }
+
+    .container {
+        width: 100% !important;
+    }
+</style>
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="titulo">Accesos <i class="bi-newspaper"></i></h3>
+        </div>
+
+    </div>
+
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <div class="row">
+                    <div class="col-md-9   ">
+                        <h5 class="mb-0">
+                            Búsqueda avanzada
+                            <button class="btn btn-light btn-sm " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="bi-arrow-down-square-fill"></i>
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="col-md-3 text-end   ">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-danger  btn-sm" title="buscar" id="btnBuscar">
+                                <i class="bi-search"></i> Buscar
+                            </button>
+                            <button class="btn  btn-sm btn-dark" id="btnLimpiar">
+                                <i class="bi-arrow-clockwise"></i> Limpiar
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row m-b-a">
+
+                        <div class="col-md-4">
+                            <label>Sistema</label>
+                            <select class="form-select" id="cboSistemaFiltro"></select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Rol</label>
+                            <select class="form-select" type="text" id="cboRolFiltro"></select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Usuario</label>
+                            <select class="form-select" type="text" id="cboUsuarioFiltro"></select>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+                 <div class="container-fluid tablelist">
+                        <div class="row listpro">
+                            <div class="col-md-6">
+                                <h5 class="titwhite">
+                                    Resultados de búsqueda
+                                </h5>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-sm btn-light   mt-2" id="btnAgregar" title="Agregar nuevo">
+                                        <i class="bi bi-file-earmark-plus-fill"></i> Nuevo Registro
+                                    </button>
+                                </div>
+                                </div>
+                        </div>
+           
+                       <div class="row">
+                             <div class="col-md-12">
+                                <table id="grid" class="table table-striped   table-hover nowrap" style="width:100%">
+                                    <thead class="thead-uarm">
+                                        <tr>
+                                            <th>N°</th>
+                                            <th>Sistema</th>
+                                            <th>Usuario</th>
+                                            <th>Rol</th>
+                                            <th>OSE</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                       </div>
+                </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        @* <div class="modal-dialog modal-xl modal-dialog-scrollable"> *@
+        <div class="modal-dialog modal-dialog-scrollable" style="max-width: 60%;">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitle">Registrar nuevo acceso</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <legend> Datos de acceso </legend>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label>Sistema</label>
+                                <select class="form-select" id="cboSistema"></select>
+                            </div>
+
+                            @* <div class="col-md-4" id="divFiltros" >
+                                <label>Pais</label>
+                                <select class="form-select" id="cboPais" ></select>
+
+                                <br />
+
+                                <label>Tipo OSE</label>
+                                <select class="form-select" id="cboTipoUbigeo" >
+                                    <option value="0">Seleccionar</option>
+                                    <option value="1">Nacional</option>
+                                    <option value="2">Exterior</option> 
+                                </select>
+                            </div> *@
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3" >
+                                <input type="hidden" id="flagEdit">
+                                <input type="hidden" id="hcodigo">
+                                <label>Usuario</label>
+
+                                <select size="10" class="form-control selectpicker" data-live-search="true" multiple data-max-options="1" type="text" id="cboUsuario"></select>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label>Rol</label>
+                                <select size="10" class="form-control selectpicker" data-live-search="true" multiple data-max-options="1" type="text" id="cboRol"></select>
+                            </div>
+                                                        
+                            <div class="col-md-6" > @* id="divCentroCostoss"> *@
+                                 <label>Centro de Costos:</label>
+                                 <select size="10" class="form-control selectpicker" data-live-search="true" multiple data-max-options="1" type="text" id="cboCentroCostos"></select>
+                             </div>
+                            
+                            <br />
+                            <div class="row" id="divGrupos">
+                                    <div class="col-md-12">
+                                        <table id="gridGrupos" class="table table-hover nowrap" style="width:100%">
+                                            <thead class="thead-uarm">
+                                                <tr>
+                                                    <th>N°</th>
+                                                    <th>Grupos atención</th>
+                                                    <th></th>
+                                                    <th class="none">CentroCostoss</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="bodyGrupos">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                         </div>  
+                    </fieldset>
+
+                       
+                        <div class="row" style="display:none">
+                            <div class="col-md-12">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="rbSi">
+                                    <label class="custom-control-label" for="rbSi">Tiene Acceso Privado</label>
+                                </div>
+
+                            </div>
+                        </div>
+                   
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabar" class="btn btn-dark"><i class="bi bi-check-lg"></i> Grabar</button>
+                    <button type="button" id="btnCerrar" class="btn btn-outline-secondary"><i class="bi bi-x-lg"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

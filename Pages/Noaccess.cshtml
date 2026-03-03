@@ -1,0 +1,30 @@
+﻿@page
+@model NoaccessModel
+@{
+    ViewData["Title"] = "Acceso Denegado";
+}
+<style>
+    @@font-face {
+        font-family: 'Roboto';
+         src: url('../css/fonts/Roboto/Roboto-Medium.ttf');
+    }
+
+    body {
+        font-family: 'Roboto',sans-serif !important;
+        overflow: hidden;
+    }
+</style>
+ 
+
+<div class="container text-center p-6" style="margin-top:200px;">
+    <div class="row">
+         
+        <div class="col mt-5 " >
+            <h2 style="color:#bf0909;">@ViewData["Title"] <i class="bi bi-exclamation-triangle-fill"></i></h2>
+
+            <p>Ud. No tiene permisos para acceder al recurso del sistema. Comuníquese con el administrador.</p>
+
+        </div>
+        
+    </div>
+</div>

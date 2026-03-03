@@ -1,0 +1,3067 @@
+﻿@page
+@model MRE.Pages.programacion.programacion_actividadesModel
+@{
+}
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+
+<script src="~/app/services/service.fasespoi.js"></script>
+<script src="~/app/services/service.programacionanios.js"></script>
+
+<script src="~/app/services/service.catalogoitem.js"></script>
+<script src="~/app/services/service.anio.js"></script>
+<script src="~/app/services/service.ubigeo.js"></script>
+<script src="~/app/services/service.ubigeoexterior.js"></script>
+<script src="~/app/services/service.programacion.js"></script>
+<script src="~/app/services/service.bienesservicios.js"></script>
+<script src="~/app/services/service.reporte.js"></script>
+<script src="~/app/services/service.reporteFinanciero.js"></script>
+
+<script src="~/app/services/service.programacion_actividades.js"></script>
+<script src="~/app/pages/programacion/programacion_actividades.js"></script>
+
+<script src="~/app/services/service.programacion_clasificador.js"></script>
+<script src="~/app/pages/programacion/programacion_clasificador.js"></script>
+
+<script src="~/app/services/service.programacion_tareas.js"></script>
+<script src="~/app/pages/programacion/programacion_tareas.js"></script>
+
+<script src="~/app/services/service.programacion_acciones.js"></script>
+<script src="~/app/pages/programacion/programacion_acciones.js"></script>
+<script src="~/app/services/service.unidadmedida.js"></script>
+<script src="~/app/services/service.programacion_recursos.js"></script>
+<script src="~/app/pages/programacion/programacion_recursos.js"></script>
+<script src="~/app/services/service.programacion_cmn.js"></script>
+<script src="~/app/pages/programacion/programacion_cmn.js"></script>
+<script src="~/app/services/service.programacion_cmnDetalle.js"></script>
+
+<script src="~/app/services/service.programacion_proyecto.js"></script>
+<script src="~/app/pages/programacion/programacion_proyecto.js"></script>
+<script src="~/app/services/service.programacion_proyectoDetalle.js"></script>
+
+<script src="~/app/pages/programacion/programacion_viaticos.js"></script>
+<script src="~/app/services/service.programacion_viaticos.js"></script>
+<script src="~/app/services/service.programacion_viaticosDetalle.js"></script>
+
+<script src="~/app/pages/programacion/programacion_otros_gastos.js"></script>
+<script src="~/app/services/service.programacion_otros_gastos.js"></script>
+<script src="~/app/services/service.programacion_otrosGastosDetalle.js"></script>
+
+<script src="~/app/pages/programacion/programacion_encargos.js"></script>
+<script src="~/app/services/service.programacion_encargos.js"></script>
+<script src="~/app/services/service.programacion_encargosDetalle.js"></script>
+
+<script src="~/app/pages/programacion/programacion_caja_chica.js"></script>
+<script src="~/app/services/service.programacion_caja_chica.js"></script>
+<script src="~/app/services/service.programacion_cajaChicaDetalle.js"></script>
+
+<script src="~/app/services/service.planillas.js"></script>
+<script src="~/app/services/service.programacion_planilla.js"></script>
+
+<script src="~/app/pages/programacion/programacion_planilla.js"></script>
+
+
+<!-- Servicios -->
+
+<style>
+    .container-fluid {
+        width: 100% !important;
+    }
+
+    .container {
+        width: 100% !important;
+    }
+</style>
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="titulo">Programación de Actividades <i class="bi-newspaper"></i></h3>
+        </div>
+
+    </div>
+
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <div class="row">
+                    <div class="col-md-9   ">
+                        <h5 class="mb-0">
+                            Búsqueda avanzada
+                            <button class="btn btn-light btn-sm " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="bi-arrow-down-square-fill"></i>
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="col-md-3 text-end   ">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-danger  btn-sm" title="buscar" id="btnBuscar">
+                                <i class="bi-search"></i> Buscar
+                            </button>
+                            <button class="btn  btn-sm btn-dark" id="btnLimpiar">
+                                <i class="bi-arrow-clockwise"></i> Limpiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row   m-b-a">
+                        <div class="col-md-2">
+                            <label>Año de Programación</label>
+                            <select id="cboAnioFiltro" class="form-control">
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Codigo Actividad </label>
+                            <input class="form-control" type="text" id="txtProgramacionFiltro">
+                        </div>
+                        <div class="col-md-2">                            
+                            <input class="form-control" type="hidden" id="txtIdCentroCostosFiltro">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Denominacion </label>
+                            <input class="form-control" type="text" id="txtDenominacionFiltro">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Descripcion </label>
+                            <input class="form-control" type="text" id="txtDescripcionFiltro">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Estado</label>
+                            <input class="form-control" type="text" id="txtEstadoFiltro">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Situación</label>
+                            <select id="cboSituacionFiltro" class="form-control">
+                                <option value="">Todos</option>
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid tablelist mt-3">
+                <div class="row listpro mb-2">
+                    <div class="col-md-6">
+                        <h5 class="titwhite">Resultados de búsqueda</h5>
+                    </div>
+                    @* <div class="col-md-6 text-end">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-light mt-2 btn-sm" id="btnAgregar" title="Agregar nuevo">
+                                <i class="bi bi-file-earmark-plus-fill"></i> Nuevo Registro
+                            </button>
+                        </div>
+                    </div> *@
+                </div>
+
+                <!-- TABS -->
+                <ul class="nav nav-tabs" id="tabResultados" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="tab-actividades" data-bs-toggle="tab" data-bs-target="#pane-actividades"
+                                type="button" role="tab" aria-controls="pane-actividades" aria-selected="true">
+                            Actividades
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-clasificador" data-bs-toggle="tab" data-bs-target="#pane-clasificador"
+                                type="button" role="tab" aria-controls="pane-clasificador" aria-selected="false">
+                            Clasificador del Gasto
+                        </button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-tareas" data-bs-toggle="tab" data-bs-target="#pane-tareas"
+                                type="button" role="tab" aria-controls="pane-tareas" aria-selected="false">
+                            Tareas
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-recursos" data-bs-toggle="tab" data-bs-target="#pane-recursos"
+                                type="button" role="tab" aria-controls="pane-recursos" aria-selected="false">
+                            Recursos
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-acciones" data-bs-toggle="tab" data-bs-target="#pane-acciones"
+                                type="button" role="tab" aria-controls="pane-acciones" aria-selected="false">
+                            Acciones
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- CONTENIDO DE TABS -->
+                <div class="tab-content mt-3" id="tabResultadosContent">
+
+                    <!-- TAB ACTIVIDADES -->
+                    <div class="tab-pane fade show active" id="pane-actividades" role="tabpanel" aria-labelledby="tab-actividades">
+
+                        <div class="modal-body">
+                            <fieldset class="border rounded-3 p-3">
+                                <div class="row">
+                                    <input type="hidden" id="hidAnioActividad">
+                                    <input type="hidden" id="htipoUbigeoActividad">
+                                    <input type="hidden" id="hUbigeoActividad">
+                                    <input type="hidden" id="hidUnidadMedidaActividad">
+                                    <div class="col-md-1 d-flex align-items-center">
+                                        <label class="me-2">Año Presupuestal</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select id="cboAnios" class="form-select"></select>
+                                    </div>
+                                    <div class="col-md-8 text-end">
+                                        <button class="btn btn-sm btn-primary me-2" id="btnMigrarActividades">
+                                            <i class="bi bi-arrow-repeat"></i> Migrar Actividades
+                                        </button>
+                                        <button class="btn btn-sm btn-dark" id="btnNuevaActividad">
+                                            <i class="bi bi-file-earmark-plus-fill"></i> Nuevo Registro
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <table id="gridActividades" class="table table-striped table-hover nowrap" style="width:100%">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    @* <th><input type="checkbox" id="chkTodos" /></th> *@
+                                    <th>Check</th>
+                                    <th>N°</th>
+                                    <th>Año</th>
+                                    <th>Código Actividad</th>
+                                    <th>Denominación</th>
+                                    <th>Unidad Medida</th>
+                                    <th>Meta Física</th>
+                                    <th>Meta Financiera</th>
+                                    <th>Estado</th>
+                                    <th>Activo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <!-- TAB CLASIFICADOR -->
+                    <div class="tab-pane fade" id="pane-clasificador" role="tabpanel" aria-labelledby="tab-clasificador">
+
+                        <div class="modal-body">
+                            <fieldset class="border rounded-3 p-3">
+                                <legend class="float-none w-auto px-3"> Datos </legend>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input type="hidden" id="hidProgramacionActividadClasificador">
+                                        <label>Año Presupuestal </label> <label style="color:red">(*)</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @* <select id="cboAniosClasificadorFiltro" class="form-select"></select> *@
+                                        <input type="text" class="form-control" id="txtAniosClasificadorFiltro" readonly />
+                                    </div>
+                                    @* <div class="col-md-6 text-end">
+                                        <button class="btn btn-sm btn-dark" id="btnNuevoClasificador">
+                                            <i class="bi bi-file-earmark-plus-fill"></i> Nuevo Registro
+                                        </button>
+                                    </div> *@
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Actividad Operativa </label> <label style="color:red">(*)</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @* <select id="cboActividadOperativaClasificadorFiltro" class="form-select"></select> *@
+                                        <input type="text" class="form-control" id="txtActividadOperativaClasificadorFiltro" readonly />
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <table id="gridClasificador" class="table table-striped table-hover nowrap" style="width:100%">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    <th>Check</th>
+                                    <th>N°</th>
+                                    <th>Actividad</th>
+                                    <th>Fuente Financiamiento</th>
+                                    <th>Calsificador</th>
+                                    <th>Denominación</th>
+                                    <th>Financiera</th>
+                                    <th>Estado</th>
+                                    <th>Activo</th>
+                                    @* <th>Acciones</th> *@
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <!-- TAB TAREAS -->
+                    <div class="tab-pane fade" id="pane-tareas" role="tabpanel" aria-labelledby="tab-tareas">
+
+                        <div class="modal-body">
+                            <fieldset class="border rounded-3 p-3">
+                                <legend class="float-none w-auto px-3"> Datos </legend>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input type="hidden" id="hidProgramacionClasificadorTareas">
+                                        <label>Año Presupuestal </label> <label style="color:red">(*)</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @* <select id="cboAniosTareasFiltro" class="form-select"></select> *@
+                                        <input type="text" class="form-control" id="txtAniosTareasFiltro" readonly />
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <button class="btn btn-sm btn-dark" id="btnNuevaTarea">
+                                            <i class="bi bi-file-earmark-plus-fill"></i> Nuevo Registro
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Actividad Operativa </label> <label style="color:red">(*)</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @* <select id="cboActividadOperativaTareasFiltro" class="form-select"></select> *@
+                                        <input type="text" class="form-control" id="txtActividadOperativaTareasFiltro" readonly />
+                                    </div>
+                                </div>
+                                @* <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Clasificador del Gasto: </label> <label style="color:red">(*)</label>
+                                    </div>
+                                    <div class="col-md-3">                                        
+                                        <input type="text" class="form-control" id="txtClasificadorTareasFiltro" readonly />
+                                    </div>
+                                </div> *@
+                            </fieldset>
+                        </div>
+
+                        <table id="gridTareas" class="table table-striped table-hover nowrap" style="width:100%">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    <th>Check</th>
+                                    <th>N°</th>
+                                    <th>Actividad</th>
+                                    <th>Tarea</th>
+                                    <th>U.M.</th>
+                                    <th>Representativa</th>
+                                    <th>Meta Física</th>
+                                    <th>Meta Financiera S/.</th>
+                                    <th>Estado</th>
+                                    <th>Activo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <!-- TAB RECURSOS -->
+                    <div class="tab-pane fade" id="pane-recursos" role="tabpanel" aria-labelledby="tab-recursos">
+                        <div class="modal-body">
+                            <fieldset class="border rounded-3 p-3">
+                                <legend class="float-none w-auto px-3">Datos</legend>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input type="hidden" id="hidProgramacionActividadRecurso">
+                                        <input type="hidden" id="hidProgramacionTareasRecurso">
+                                        <label>Año Presupuestal </label> <label style="color:red">(*)</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="txtAnioRecursoFiltro" readonly />
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <button class="btn btn-sm btn-dark" id="btnAgregarRecurso">
+                                            <i class="bi bi-file-earmark-plus-fill"></i> Nuevo Registro
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Actividad Operativa </label> <label style="color:red">(*)</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="txtActividadRecursoFiltro" readonly />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Nombre de la Tarea </label> <label style="color:red">(*)</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="txtTareaRecursoFiltro" readonly />
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <table id="gridRecursos" class="table table-striped table-hover nowrap" style="width:100%">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    <th>N°</th>
+                                    <th>FF</th>
+                                    <th>Clasificador</th>
+                                    <th>Denominación</th>
+                                    <th>Tipo de Gasto</th>
+                                    <th>Tipo de Item</th>
+                                    <th>Meta Financiera S/.</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <!-- TAB ACCIONES -->
+                    <div class="tab-pane fade" id="pane-acciones" role="tabpanel" aria-labelledby="tab-acciones">
+
+                        <div class="modal-body">
+                            <fieldset class="border rounded-3 p-3">
+                                <legend class="float-none w-auto px-3"> Datos </legend>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input type="hidden" id="hidProgramacionTareasAcciones">
+                                        <label>Año Presupuestal </label> <label style="color:red">(*)</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @* <select id="cboAniosAccionesFiltro" class="form-select"></select> *@
+                                        <input type="text" class="form-control" id="txtAniosAccionesFiltro" readonly />
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <button class="btn btn-sm btn-dark" id="btnNuevaAccion">
+                                            <i class="bi bi-file-earmark-plus-fill"></i> Nuevo Registro
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Actividad Operativa </label> <label style="color:red">(*)</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @* <select id="cboActividadOperativaAccionesFiltro" class="form-select"></select> *@
+                                        <input type="text" class="form-control" id="txtActividadOperativaAccionesFiltro" readonly />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Nombre de la Tarea </label> <label style="color:red">(*)</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @* <select id="cboTareaAccionesFiltro" class="form-select"></select> *@
+                                        <input type="text" class="form-control" id="txtTareaAccionesFiltro" readonly />
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <table id="gridAcciones" class="table table-striped table-hover nowrap" style="width:100%">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Código</th>
+                                    <th>Descripción</th>
+                                    <th>U.M.</th>
+                                    <th>Representativa</th>
+                                    <th>Acumulativa</th>
+                                    <th>Meta Física</th>
+                                    <th>Estado</th>
+                                    <th>Activo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @* ** Actividades ** *@
+    <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitle">Registrar nuevo</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" id="flagEdit">
+                        <input type="hidden" id="hidProgramacionActividad">
+                        <input type="hidden" id="hcodigoProgramacion">
+                        <div class="col-md-3">
+                            <label>Año Presupuestal </label> <label style="color:red">(*)</label>
+                        </div>
+                        <div class="col-md-9">
+                            @* <select id="cboAniosActividades" class="form-select"> </select> *@
+                            <input type="text" class="form-control" id="txtAniosActividades" readonly />
+                        </div>
+                    </div>
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3"> Politica</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Servicio: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboServicio" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Objetivo Prioritario: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtObjetivoPrioritario" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Lineamiento: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtLineamientos" readonly />
+                            </div>
+                        </div>
+
+                    </fieldset>
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3"> PESEM y PEI</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>OES: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboOES" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>AES: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboAES" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>OEI: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboOEI" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>AEI: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboAEI" class="form-select"> </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3"> EFP</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Categoría Presupuestal: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboCategoríaPresupuestal" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Producto/Proyecto: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboProducto" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Función: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboFuncion" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>División Funcional: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboDivisiónFuncional" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Grupo Funcional: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboGrupoFuncional" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Actividad Presupuestal: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboActividadPresupuestal" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Finalidad: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboFinalidad" class="form-select"> </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="border rounded-3 p-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Codigo Actividad Operativa: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" maxlength="6" pattern="^\d{6}$" id="txtProgramacion" title="Debe ingresar exactamente 6 dígitos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Denominación: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtDenominacion" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Descripción: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtDescripcion" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Unidad de medida:</label>
+                            </div>
+                            <div class="col-md-9">                                
+                                <select class="form-select" id="cboUnidadMedida"></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Tipo de Ubigeo: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboUbigeo" class="form-select">
+                                    <option value="0">-- Seleccione --</option>
+                                    <option value="1">Nacional</option>
+                                    <option value="2">Extranjero</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Bloque Nacional -->
+                        <div id="divNacional" class="row" style="display:none;">
+                            <div class="col-md-3">
+                                <label>Departamento:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboDepartamento" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Provincia:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboProvincia" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Distrito:  </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboDistrito" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <!-- Bloque Extranjero -->
+                        <div id="divExtranjero" class="row" style="display:none;">
+                            <div class="col-md-3">
+                                <label>Región:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboRegion" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>País:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboPais" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Ciudad:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboCiudad" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Moneda: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboMoneda" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Tipo de Cambio:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtMoneda" readonly />
+                            </div>
+
+                        </div>
+
+
+                        <div class="row"> <br /> </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Actividad Operativa: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" class="form-control" id="chkActividadOperativa" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Actividad Inversión: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" class="form-control" id="chkActividadInversion" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Centro de Costo: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboCentroCosto" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Estado </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtEstado" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Activo</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboActivo" class="form-select">
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabar" class="btn btn-primary"><i class="bi bi-check-lg"></i> Grabar</button>
+                    <button type="button" id="btnCerrar" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* ** Clasificador ** *@
+    <div class="modal fade" id="modalClasificador" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitleClasificador">Registrar Nueva Clasificador</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3"> Datos de Clasificador:</legend>
+                        <div class="row">
+                            <input type="hidden" id="flagEditClasificador">
+                            <input type="hidden" id="hidClasificador">
+                            <input type="hidden" id="hAniosPresupuestalClasificador">
+                            <div class="col-md-3">
+                                <label>Año Presupuestal </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                @* <select id="cboAnioClasificador" class="form-select"> </select> *@
+                                <input type="text" class="form-control" id="txtAniosClasificador" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Actividad Operativa: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtActividadOperativaClasificador" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Clasificador del Gasto: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboClasificadordelGasto" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none;">
+                            <div class="col-md-3">
+                                <label>Código de Clasificador: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtCodigoClasificador" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Denominación de Clasificador: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="txtDenominacionClasificador" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Fuente de Financiamiento: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboFuenteFinanciamientoClasificador" class="form-select"> </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Estado </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtEstadoClasificador" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Activo</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboActivoClasificador" class="form-select">
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabarClasificador" class="btn btn-primary"><i class="bi bi-check-lg"></i> Grabar</button>
+                    <button type="button" id="btnCerrarClasificador" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @* ** Tareas ** *@
+    <div class="modal fade" id="modalTareas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitleTareas">Registrar Nueva Tarea</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3"> Datos de Tareas:</legend>
+                        <div class="row">
+                            <input type="hidden" id="flagEditTareas">
+                            <input type="hidden" id="hidTareas">
+                            <input type="hidden" id="hAniosPresupuestalTareas">
+                            @* <input type="hidden" id="hidProgramacionActividad"> *@
+                            <div class="col-md-3">
+                                <label>Año Presupuestal </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                @* <select id="cboAnioTareas" class="form-select"> </select> *@
+                                <input type="text" class="form-control" id="txtAnioTareas" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Actividad Operativa: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtActividadOperativaTareas" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Código de Tarea: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtCodigoTarea" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Tipo de Ubigeo: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboUbigeoTareas" class="form-select">
+                                    <option value="0">-- Seleccione --</option>
+                                    <option value="1">Nacional</option>
+                                    <option value="2">Extranjero</option>
+                                </select>
+                                <input type="hidden" class="form-control" id="txtUbigeoTareas" readonly />
+                            </div>
+                        </div>
+                        <!-- Bloque Nacional -->
+                        <div id="divNacionalTareas" class="row" style="display:none;">
+                            <div class="col-md-3">
+                                <label>Departamento:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboDepartamentoTareas" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Provincia:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboProvinciaTareas" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Distrito:  </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboDistritoTareas" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <!-- Bloque Extranjero -->
+                        <div id="divExtranjeroTareas" class="row" style="display:none;">
+                            <div class="col-md-3">
+                                <label>Región:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboRegionTareas" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>País:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboPaisTareas" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Ciudad:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboCiudadTareas" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Moneda: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboMonedaTareas" class="form-select"> </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Tipo de Cambio:</label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtMonedaTarea" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Denominación de Tarea: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="txtDenominacionTarea" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Unidad de Medida: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboUnidadMedidaTareas" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row"> <br /> </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Representativa: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" class="form-control" id="chkRepresentativa" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"> <br /> </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Fuente de Financiamiento: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboFuenteFinanciamiento" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Estado </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtEstadoTareas" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Activo</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboActivoTareas" class="form-select">
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabarTareas" class="btn btn-primary"><i class="bi bi-check-lg"></i> Grabar</button>
+                    <button type="button" id="btnCerrarTareas" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* ** Acciones ** *@
+    <div class="modal fade" id="modalAcciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitleAcciones">Registrar nuevo</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3"> Datos Acciones:</legend>
+                        <div class="row">
+                            <input type="hidden" id="flagEditAcciones">
+                            <input type="hidden" id="hidAcciones">
+                            <input type="hidden" id="hidTareasAcciones">
+                            <input type="hidden" id="hAniosPresupuestalAcciones">
+                            <input type="hidden" id="hidProgramacionActividadAcciones">
+                            <div class="col-md-3">
+                                <label>Año Presupuestal </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                @* <select id="cboAnioAcciones" class="form-select"> </select> *@
+                                <input type="text" class="form-control" id="txtAnioAcciones" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Actividad Operativa: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtActividadOperativaAcciones" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Tareas: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                @* <select id="cboCodigoTareasAcciones" class="form-select"> </select> *@
+                                <input type="text" class="form-control" id="txtCodigoTareasAcciones" readonly />
+                            </div>
+                        </div>
+                        @* *** *@
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Codigo Acciones: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtCodigoAcciones" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Denominación de Acciones: </label><label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="txtDenominacionAcciones" rows="2"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Unidad de Medida: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="cboUnidadMedidaAcciones" class="form-select"> </select>
+                            </div>
+                        </div>
+                        <div class="row"> <br /> </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Representativa: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" class="form-control" id="chkRepresentativaAcciones" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Acumulativa: </label> <label style="color:red">(*)</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" class="form-control" id="chkAcumulativaAcciones" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Estado: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="txtEstadoAcciones" />
+                            </div>
+                            <div class="col-md-3" style="text-align:center">
+                                <label>Activo:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="cboActivoAcciones" class="form-select">
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3"> Programación Mensual:</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Enero: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtEneroAcciones" />
+                            </div>
+                            <div class="col-md-3" style="text-align:left">
+                                <label>Julio:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtJulioAcciones" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Febrero: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtFebreroAcciones" />
+                            </div>
+                            <div class="col-md-3" style="text-align:left">
+                                <label>Agosto:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtAgostoAcciones" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Marzo: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtMarzoAcciones" />
+                            </div>
+                            <div class="col-md-3" style="text-align:left">
+                                <label>Setiembre:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtSetiembreAcciones" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Abril: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtAbrilAcciones" />
+                            </div>
+                            <div class="col-md-3" style="text-align:left">
+                                <label>Octubre:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtOctubreAcciones" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Mayo: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtMayoAcciones" />
+                            </div>
+                            <div class="col-md-3" style="text-align:left">
+                                <label>Noviembre:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtNoviembreAcciones" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Junio: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtJunioAcciones" />
+                            </div>
+                            <div class="col-md-3" style="text-align:left">
+                                <label>Diciembre:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtDiciembreAcciones" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Total Anual: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control numero-mes" id="txtTotalAnualAcciones" readonly />
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabarAcciones" class="btn btn-primary"><i class="bi bi-check-lg"></i> Grabar</button>
+                    <button type="button" id="btnCerrarAcciones" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL RECURSOS -->
+    <div class="modal fade" id="modalRecursos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitleRecursos">Registrar presupuesto de Recursos</h4>
+                    <button type="button" class="btn-close btn-close-recursos" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">
+                        <input type="hidden" id="flagEditRecursos">
+                        <input type="hidden" id="hidRecursos">
+
+                        <div class="row">
+                            <div class="col-md-3"><label>Año</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtAnioRecurso" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"><label>Actividad operativa:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtActividadOperativaRecurso" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"><label>Tarea:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtTareaRecurso" readonly />
+                            </div>
+                        </div>
+
+                        <!-- ✅ CAMBIAR: Nuevo ID único para el modal de recursos -->
+                        <div class="row">
+                            <div class="col-md-3"><label>Unidad de medida:</label></div>
+                            <div class="col-md-9">
+                                <select class="form-select" id="cboUnidadMedidaRecursoModal">
+                                    <option value="">-- Seleccione --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"><label>Representativa:</label></div>
+                            <div class="col-md-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="chkRepresentativaRecurso" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"><label>Fuente de financiamiento:</label></div>
+                            <div class="col-md-9">
+                                <select id="cboFuenteFinanciamientoRecurso" class="form-select">
+                                    <option value="">-- Seleccione --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"><label>Ubigeo:</label> <label style="color:red">(*)</label></div>
+                            <div class="col-md-9">
+                                <select id="cboUbigeoRecurso" class="form-select">
+                                    <option value="">-- Seleccione --</option>
+                                    <option value="1">Nacional</option>
+                                    <option value="2">Exterior</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="border rounded-3 p-3 mt-3">
+                        <legend class="float-none w-auto px-3">Registro de gastos</legend>
+                        <div class="row g-2">
+                            <div class="col-md-6 col-lg-4" id="gastoOBN" style="display:none;">
+                                <button type="button" class="btn btn-outline-primary w-100 btn-gasto" data-tipo="OBN">
+                                    <i class="bi bi-check-circle me-2"></i>CMN
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-lg-4" id="gastoProyecto" style="display:none;">
+                                <button type="button" class="btn btn-outline-primary w-100 btn-gasto" data-tipo="Proyecto">
+                                    <i class="bi bi-check-circle me-2"></i>Proyecto
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-lg-4" id="gastoViaticos" style="display:none;">
+                                <button type="button" class="btn btn-outline-primary w-100 btn-gasto" data-tipo="Viaticos">
+                                    <i class="bi bi-check-circle me-2"></i>Viáticos
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-lg-4" id="gastoCajaChica" style="display:none;">
+                                <button type="button" class="btn btn-outline-primary w-100 btn-gasto" data-tipo="CajaChica">
+                                    <i class="bi bi-check-circle me-2"></i>Caja chica
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-lg-4" id="gastoOtrosGastos" style="display:none;">
+                                <button type="button" class="btn btn-outline-primary w-100 btn-gasto" data-tipo="OtrosGastos">
+                                    <i class="bi bi-check-circle me-2"></i>Otros gastos
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-lg-4" id="gastoEncargas" style="display:none;">
+                                <button type="button" class="btn btn-outline-primary w-100 btn-gasto" data-tipo="Encargas">
+                                    <i class="bi bi-check-circle me-2"></i>Encargos
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-lg-4" id="gastoPlanilla" style="display:none;">
+                                <button type="button" class="btn btn-outline-primary w-100 btn-gasto" data-tipo="Planilla">
+                                    <i class="bi bi-check-circle me-2"></i>Planilla
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabarRecursos" class="btn btn-primary"><i class="bi bi-check-lg"></i> Grabar</button>
+                    <button type="button" id="btnCerrarRecursos" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL CUADRO MULTIANUAL -->
+    <div class="modal fade" id="modalCuadroMultianual" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">Registrar presupuesto de tarea / CMN</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Año:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtAnioCMN" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Actividad operativa:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtActividadCMN" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Tarea:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtTareaCMN" readonly /></div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Unidad de medida:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="cboUnidadMedidaCMN" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Representativa:</label></div>
+                            <div class="col-md-9"><input type="checkbox" class="form-check-input" id="chkRepresentativaCMN" disabled /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Fuente de financiamiento:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtFuenteCMN" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Ubigeo:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtUbigeoCMN" readonly />
+                                <input type="hidden" id="hidTipoUbigeoCMN" />
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="text-end mt-3">
+                        <button class="btn btn-dark btn-sm" id="btnInsertarItemsCMN">
+                            <i class="bi bi-plus-circle"></i> Insertar ítems
+                        </button>
+                    </div>
+
+                    <fieldset class="border rounded-3 p-3 mt-3">
+                        <legend class="float-none w-auto px-3">Cuadro multianual de necesidades</legend>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mes</th>
+                                        <th>Enero</th>
+                                        <th>Febrero</th>
+                                        <th>Marzo</th>
+                                        <th>Abril</th>
+                                        <th>Mayo</th>
+                                        <th>Junio</th>
+                                        <th>Julio</th>
+                                        <th>Agosto</th>
+                                        <th>Setiembre</th>
+                                        <th>Octubre</th>
+                                        <th>Noviembre</th>
+                                        <th>Diciembre</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyCuadroMultianual">
+                                    <tr>
+                                        <td>Monto</td>
+                                        <td colspan="13" class="text-center text-muted">No hay ítems agregados</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnGrabarCMN">
+                        <i class="bi bi-check-lg"></i> Grabar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LISTA DE ITEMS NACIONAL -->
+    <div class="modal fade" id="modalItemsNacional" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">Lista de ítems / Nacional</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label>Tipo de ítem:</label>
+                            <select class="form-select" id="cboTipoItemNacional">
+                                <option value="">Seleccionar</option>
+                                <option value="1">Suministros</option>
+                                <option value="2">Activos Fijos</option>
+                                <option value="3">Servicios</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Genérico:</label>
+                            <select class="form-select" id="cboGenericoNacional">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Ingresar búsqueda:</label>
+                            <input type="text" class="form-control" id="txtBusquedaNacional"
+                                   placeholder="Según lo que se digite mostrará las coincidencias" />
+                        </div>
+                        <div class="col-md-2">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary w-100" id="btnBuscarItemNacional">Buscar</button>
+                        </div>
+                    </div>
+
+                    <div id="divTablaItemsNacional">
+                        <fieldset class="border rounded-3 p-3">
+                            <legend class="float-none w-auto px-3">Ítems</legend>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-uarm">
+                                        <tr>
+                                            <th>Código ítem</th>
+                                            <th>Descripción</th>
+                                            <th>Cantidad</th>
+                                            <th>Unidad de medida</th>
+                                            <th>Precio</th>
+                                            <th>Clasificador</th>
+                                            <th>Nombre clasificador</th>
+                                            <th>Mes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyItemsNacional"></tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnAgregarItemsNacional">
+                        <i class="bi bi-plus-lg"></i> Agregar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LISTA DE ITEMS EXTERIOR -->
+    <div class="modal fade" id="modalItemsExterior" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">Lista de ítems / Exterior</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label>Tipo de ítem:</label>
+                            <select class="form-select" id="cboTipoItemExterior">
+                                <option value="">Seleccionar</option>
+                                <option value="1">Suministros</option>
+                                <option value="2">Activos Fijos</option>
+                                <option value="3">Servicios</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Genérico:</label>
+                            <select class="form-select" id="cboGenericoExterior">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Ingresar búsqueda:</label>
+                            <input type="text" class="form-control" id="txtBusquedaExterior"
+                                   placeholder="Según lo que se digite mostrará las coincidencias" />
+                        </div>
+                        <div class="col-md-2">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary w-100" id="btnBuscarItemExterior">Buscar</button>
+                        </div>
+                    </div>
+
+                    <div id="divTablaItemsExterior">
+                        <fieldset class="border rounded-3 p-3">
+                            <legend class="float-none w-auto px-3">Ítems</legend>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-uarm">
+                                        <tr>
+                                            <th>Código ítem</th>
+                                            <th>Descripción</th>
+                                            <th>Valor</th>
+                                            <th>Unidad de medida</th>
+                                            <th>Clasificador</th>
+                                            <th>Nombre clasificador</th>
+                                            <th>Mes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyItemsExterior"></tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnAgregarItemsExterior">
+                        <i class="bi bi-plus-lg"></i> Agregar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SERVICIOS NACIONAL -->
+    <div class="modal fade" id="modalServiciosNacional" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">Lista de ítems / Nacional - Servicios</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label>Tipo de ítem:</label>
+                            <select class="form-select" id="cboTipoItemServicioNacional" disabled>
+                                <option value="3" selected>Servicios</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Genérico:</label>
+                            <select class="form-select" id="cboGenericoServicioNacional">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Ingresar búsqueda:</label>
+                            <input type="text" class="form-control" id="txtBusquedaServicioNacional"
+                                   placeholder="Según lo que se digite mostrará las coincidencias" />
+                        </div>
+                        <div class="col-md-2">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary w-100" id="btnBuscarServicioNacional">Buscar</button>
+                        </div>
+                    </div>
+
+                    <div id="divTablaServiciosNacional">
+                        <fieldset class="border rounded-3 p-3">
+                            <legend class="float-none w-auto px-3">Ítems</legend>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-uarm">
+                                        <tr>
+                                            <th>Código ítem</th>
+                                            <th>Descripción</th>
+                                            <th>Valor</th>
+                                            <th>Unidad de medida</th>
+                                            <th>Clasificador</th>
+                                            <th>Nombre clasificador</th>
+                                            <th>Mes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyServiciosNacional"></tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnAgregarServiciosNacional">
+                        <i class="bi bi-plus-lg"></i> Agregar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SERVICIOS EXTERIOR -->
+    <div class="modal fade" id="modalServiciosExterior" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">Lista de ítems / Exterior - Servicios</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label>Tipo de ítem:</label>
+                            <select class="form-select" id="cboTipoItemServicioExterior" disabled>
+                                <option value="3" selected>Servicios</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Genérico:</label>
+                            <select class="form-select" id="cboGenericoServicioExterior">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Ingresar búsqueda:</label>
+                            <input type="text" class="form-control" id="txtBusquedaServicioExterior"
+                                   placeholder="Según lo que se digite mostrará las coincidencias" />
+                        </div>
+                        <div class="col-md-2">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary w-100" id="btnBuscarServicioExterior">Buscar</button>
+                        </div>
+                    </div>
+
+                    <div id="divTablaServiciosExterior">
+                        <fieldset class="border rounded-3 p-3">
+                            <legend class="float-none w-auto px-3">Ítems</legend>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-uarm">
+                                        <tr>
+                                            <th>Código ítem</th>
+                                            <th>Descripción</th>
+                                            <th>Valor</th>
+                                            <th>Unidad de medida</th>
+                                            <th>Clasificador</th>
+                                            <th>Nombre clasificador</th>
+                                            <th>Mes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyServiciosExterior"></tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnAgregarServiciosExterior">
+                        <i class="bi bi-plus-lg"></i> Agregar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL PROYECTO -->
+    <div class="modal fade" id="modalProyecto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">Registrar presupuesto de tarea / Proyecto</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Año:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtAnioProyecto" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Actividad operativa:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtActividadProyecto" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Tarea:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtTareaProyecto" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Unidad de medida:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtUnidadMedidaProyecto" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Representativa:</label></div>
+                            <div class="col-md-9"><input type="checkbox" class="form-check-input" id="chkRepresentativaProyecto" disabled /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Fuente de financiamiento:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtFuenteProyecto" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Ubigeo:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtUbigeoProyecto" readonly />
+                                <input type="hidden" id="hidTipoUbigeoProyecto" />
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="text-end mt-3">
+                        <button class="btn btn-dark btn-sm" id="btnInsertarItemsProyecto">
+                            <i class="bi bi-plus-circle"></i> Insertar ítems
+                        </button>
+                    </div>
+
+                    <fieldset class="border rounded-3 p-3 mt-3">
+                        <legend class="float-none w-auto px-3">Proyectos</legend>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mes</th>
+                                        <th>Enero</th>
+                                        <th>Febrero</th>
+                                        <th>Marzo</th>
+                                        <th>Abril</th>
+                                        <th>Mayo</th>
+                                        <th>Junio</th>
+                                        <th>Julio</th>
+                                        <th>Agosto</th>
+                                        <th>Setiembre</th>
+                                        <th>Octubre</th>
+                                        <th>Noviembre</th>
+                                        <th>Diciembre</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyProyectos">
+                                    <tr>
+                                        <td>Monto</td>
+                                        <td colspan="13" class="text-center text-muted">No hay ítems agregados</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+
+                    <div class="row mt-3">
+                        <div class="col-md-3"><label>Denominación de recurso:</label></div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtDenominacionRecursoProyecto"
+                                   placeholder="Ingrese denominación del recurso" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnGrabarProyecto">
+                        <i class="bi bi-check-lg"></i> Grabar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ITEMS PROYECTO NACIONAL -->
+    <div class="modal fade" id="modalItemsProyectoNacional" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">Lista de ítems / Nacional</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning" role="alert">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Nota:</strong> Se cargarán todos los ítems del clasificador 2.6
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label>Tipo de ítem:</label>
+                            <select class="form-select" id="cboTipoItemProyectoNacional">
+                                <option value="">Seleccionar</option>
+                                <option value="1">Bienes</option>
+                                <option value="2">Activos</option>
+                                <option value="3">Servicios</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Ingresar búsqueda:</label>
+                            <input type="text" class="form-control" id="txtBusquedaProyectoNacional"
+                                   placeholder="Según lo que se digite mostrará las coincidencias" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary w-100" id="btnBuscarItemProyectoNacional">Buscar</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    <th>Código ítem</th>
+                                    <th>Descripción</th>
+                                    <th>Valor</th>
+                                    <th>Unidad de medida</th>
+                                    <th>Clasificador</th>
+                                    <th>Nombre clasificador</th>
+                                    <th>Mes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyItemsProyectoNacional">
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">
+                                        Seleccione tipo de ítem y presione buscar
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnAgregarItemsProyectoNacional">
+                        <i class="bi bi-plus-lg"></i> Agregar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ITEMS PROYECTO EXTERIOR -->
+    <div class="modal fade" id="modalItemsProyectoExterior" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">Lista de ítems / Exterior</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning" role="alert">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Nota:</strong> Se cargarán todos los ítems del clasificador 2.6
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label>Tipo de ítem:</label>
+                            <select class="form-select" id="cboTipoItemProyectoExterior">
+                                <option value="">Seleccionar</option>
+                                <option value="1">Bienes</option>
+                                <option value="2">Activos</option>
+                                <option value="3">Servicios</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Ingresar búsqueda:</label>
+                            <input type="text" class="form-control" id="txtBusquedaProyectoExterior"
+                                   placeholder="Según lo que se digite mostrará las coincidencias" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary w-100" id="btnBuscarItemProyectoExterior">Buscar</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    <th>Código ítem</th>
+                                    <th>Descripción</th>
+                                    <th>Valor</th>
+                                    <th>Unidad de medida</th>
+                                    <th>Clasificador</th>
+                                    <th>Nombre clasificador</th>
+                                    <th>Mes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyItemsProyectoExterior">
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">
+                                        Seleccione tipo de ítem y presione buscar
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnAgregarItemsProyectoExterior">
+                        <i class="bi bi-plus-lg"></i> Agregar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MODAL VIÁTICOS
+         ========================================== -->
+    <div class="modal fade" id="modalViaticos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitleViaticos">Registrar Presupuesto de Viáticos</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Información General -->
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Información General</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Año:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtAnioViaticos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Actividad operativa:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtActividadViaticos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Tarea:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtTareaViaticos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Unidad de medida:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtUnidadMedidaViaticos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Representativa:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="chkRepresentativaViaticos" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Fuente de financiamiento:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtFuenteViaticos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Ubigeo:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtUbigeoViaticos" readonly />
+                                <input type="hidden" id="hidTipoUbigeoViaticos" />
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Datos del Viático -->
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Datos del Viático</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Clasificador de gasto:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select class="form-select" id="cboClasificadorViaticos">
+                                    <option value="">Seleccionar</option>
+                                    <option value="1">2.3.21.11 - Viáticos y asignaciones por comisión de servicio</option>
+                                    <option value="2">2.3.21.12 - Viáticos al exterior</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Denominación de recurso:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtDenominacionRecursoViaticos"
+                                       placeholder="Ingrese denominación del recurso" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Monto:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoViaticos"
+                                       placeholder="0.00" min="0" step="0.01" />
+                            </div>
+                            <div class="col-md-3" style="text-align:center">
+                                <label>Días:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtDiasViaticos"
+                                       placeholder="0" min="0" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Cantidad de personas:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtCantidadPersonasViaticos"
+                                       placeholder="0" min="0" />
+                            </div>
+                            <div class="col-md-3" style="text-align:center">
+                                <label>Total:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="txtTotalViaticos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Mes:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="cboMesViaticos">
+                                    <option value="">Seleccionar</option>
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Setiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button type="button" class="btn btn-success" id="btnAgregarViatico">
+                                    <i class="bi bi-plus-circle"></i> Agregar
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Tabla de Viáticos -->
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Viáticos</legend>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mes</th>
+                                        <th>Enero</th>
+                                        <th>Febrero</th>
+                                        <th>Marzo</th>
+                                        <th>Abril</th>
+                                        <th>Mayo</th>
+                                        <th>Junio</th>
+                                        <th>Julio</th>
+                                        <th>Agosto</th>
+                                        <th>Setiembre</th>
+                                        <th>Octubre</th>
+                                        <th>Noviembre</th>
+                                        <th>Diciembre</th>
+                                        <th>Monto Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyViaticos">
+                                    <tr>
+                                        <td>Monto</td>
+                                        <td colspan="13" class="text-center text-muted">No hay viáticos agregados</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabarViaticos" class="btn btn-primary">
+                        <i class="bi bi-check-lg"></i> Grabar
+                    </button>
+                    <button type="button" id="btnCerrarViaticos" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL OTROS GASTOS -->
+    <div class="modal fade" id="modalOtrosGastos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitleOtrosGastos">Registrar Presupuesto de Otros Gastos</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Información General -->
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Información General</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Año:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtAnioOtrosGastos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Actividad operativa:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtActividadOtrosGastos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Tarea:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtTareaOtrosGastos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Unidad de medida:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtUnidadMedidaOtrosGastos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Representativa:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="chkRepresentativaOtrosGastos" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Fuente de financiamiento:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtFuenteOtrosGastos" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Ubigeo:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtUbigeoOtrosGastos" readonly />
+                                <input type="hidden" id="hidTipoUbigeoOtrosGastos" />
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Datos del Gasto -->
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Datos del Gasto</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Genérico:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select class="form-select" id="cboGenericoOtrosGastos">
+                                    <option value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Clasificador de gasto:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select class="form-select" id="cboClasificadorOtrosGastos">
+                                    <option value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Denominación de recurso:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtDenominacionRecursoOtrosGastos"
+                                       placeholder="Ingrese denominación del recurso" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Valor:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtValorOtrosGastos"
+                                       placeholder="0.00" min="0" step="0.01" />
+                            </div>
+                            <div class="col-md-3" style="text-align:center">
+                                <label>Mes:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="cboMesOtrosGastos">
+                                    <option value="">Seleccionar</option>
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Setiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-end">
+                                <button type="button" class="btn btn-success" id="btnAgregarOtroGasto">
+                                    <i class="bi bi-plus-circle"></i> Agregar
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Tabla de Otros Gastos -->
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Otros Gastos</legend>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mes</th>
+                                        <th>Enero</th>
+                                        <th>Febrero</th>
+                                        <th>Marzo</th>
+                                        <th>Abril</th>
+                                        <th>Mayo</th>
+                                        <th>Junio</th>
+                                        <th>Julio</th>
+                                        <th>Agosto</th>
+                                        <th>Setiembre</th>
+                                        <th>Octubre</th>
+                                        <th>Noviembre</th>
+                                        <th>Diciembre</th>
+                                        <th>Monto Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyOtrosGastos">
+                                    <tr>
+                                        <td>Monto</td>
+                                        <td colspan="13" class="text-center text-muted">No hay gastos agregados</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabarOtrosGastos" class="btn btn-primary">
+                        <i class="bi bi-check-lg"></i> Grabar
+                    </button>
+                    <button type="button" id="btnCerrarOtrosGastos" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ENCARGOS -->
+    <div class="modal fade" id="modalEncargos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitleEncargos">Registrar presupuesto de tarea / Encargos</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Información General -->
+                    <fieldset class="border rounded-3 p-3">
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Año:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtAnioEncargos" readonly />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Actividad operativa:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtActividadEncargos" readonly />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Tarea:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtTareaEncargos" readonly />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Unidad de medida:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtUnidadMedidaEncargos" readonly />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Representativa:</label></div>
+                            <div class="col-md-9">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="chkRepresentativaEncargos" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Fuente de financiamiento:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtFuenteEncargos" readonly />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Ubigeo:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtUbigeoEncargos" readonly />
+                                <input type="hidden" id="hidTipoUbigeoEncargos" />
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Datos del Encargo -->
+                    <fieldset class="border rounded-3 p-3 mt-3">
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <label>Clasificador de gasto:</label>
+                                <select class="form-select" id="cboClasificadorEncargos">
+                                    <option value="">Seleccionar</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Denominación de recurso:</label>
+                                <input type="text" class="form-control" id="txtDenominacionRecursoEncargos"
+                                       placeholder="Ingrese denominación del recurso" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <label>Valor:</label>
+                                <input type="number" class="form-control" id="txtValorEncargos"
+                                       placeholder="0.00" min="0" step="0.01" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Mes:</label>
+                                <select class="form-select" id="cboMesEncargos">
+                                    <option value="">Seleccionar</option>
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Setiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-end">
+                                <button type="button" class="btn btn-success" id="btnAgregarEncargo">
+                                    <i class="bi bi-plus-circle"></i> Agregar
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Tabla de Encargos -->
+                    <fieldset class="border rounded-3 p-3 mt-3">
+                        <legend class="float-none w-auto px-3">Encargos</legend>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mes</th>
+                                        <th>Enero</th>
+                                        <th>Febrero</th>
+                                        <th>Marzo</th>
+                                        <th>Abril</th>
+                                        <th>Mayo</th>
+                                        <th>Junio</th>
+                                        <th>Julio</th>
+                                        <th>Agosto</th>
+                                        <th>Setiembre</th>
+                                        <th>Octubre</th>
+                                        <th>Noviembre</th>
+                                        <th>Diciembre</th>
+                                        <th>Monto Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyEncargos">
+                                    <tr>
+                                        <td>Monto</td>
+                                        <td colspan="13" class="text-center text-muted">No hay encargos agregados</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabarEncargos" class="btn btn-primary">
+                        <i class="bi bi-check-lg"></i> Grabar
+                    </button>
+                    <button type="button" id="btnCerrarEncargos" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CAJA CHICA -->
+    <div class="modal fade" id="modalCajaChica" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitleCajaChica">Registrar presupuesto de tarea / Caja chica</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Información General -->
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Información General</legend>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Año:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtAnioCajaChica" readonly />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Actividad operativa:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtActividadCajaChica" readonly />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Tarea:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtTareaCajaChica" readonly />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Unidad de medida:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtUnidadMedidaCajaChica" readonly />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Representativa:</label></div>
+                            <div class="col-md-9">
+                                <input type="checkbox" class="form-check-input" id="chkRepresentativaCajaChica" disabled />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Fuente de financiamiento:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtFuenteCajaChica" readonly />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Ubigeo:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtUbigeoCajaChica" readonly />
+                                <input type="hidden" id="hidTipoUbigeoCajaChica" />
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="text-end mt-3">
+                        <button class="btn btn-dark btn-sm" id="btnInsertarItemsCajaChica">
+                            <i class="bi bi-plus-circle"></i> Insertar ítems
+                        </button>
+                    </div>
+
+                    <fieldset class="border rounded-3 p-3 mt-3">
+                        <legend class="float-none w-auto px-3">Caja chica</legend>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mes</th>
+                                        <th>Enero</th>
+                                        <th>Febrero</th>
+                                        <th>Marzo</th>
+                                        <th>Abril</th>
+                                        <th>Mayo</th>
+                                        <th>Junio</th>
+                                        <th>Julio</th>
+                                        <th>Agosto</th>
+                                        <th>Setiembre</th>
+                                        <th>Octubre</th>
+                                        <th>Noviembre</th>
+                                        <th>Diciembre</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyCajaChica">
+                                    <tr>
+                                        <td>Monto</td>
+                                        <td colspan="13" class="text-center text-muted">No hay ítems agregados</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnGrabarCajaChica">
+                        <i class="bi bi-check-lg"></i> Grabar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LISTA DE ITEMS CAJA CHICA NACIONAL -->
+    <div class="modal fade" id="modalItemsCajaChicaNacional" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">Lista de ítems / Nacional</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label>Tipo de ítem:</label>
+                            <select class="form-select" id="cboTipoItemCajaChicaNacional">
+                                <option value="">Seleccionar</option>
+                                <option value="1">Suministros</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Genérico:</label>
+                            <select class="form-select" id="cboGenericoCajaChicaNacional">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Ingresar búsqueda:</label>
+                            <input type="text" class="form-control" id="txtBusquedaCajaChicaNacional"
+                                   placeholder="Según lo que se digite mostrará las coincidencias" />
+                        </div>
+                        <div class="col-md-2">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary w-100" id="btnBuscarItemCajaChicaNacional">Buscar</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    <th>Código ítem</th>
+                                    <th>Descripción</th>
+                                    <th>Cantidad</th>
+                                    <th>Unidad de medida</th>
+                                    <th>Precio</th>
+                                    <th>Clasificador</th>
+                                    <th>Nombre clasificador</th>
+                                    <th>Mes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyItemsCajaChicaNacional"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnAgregarItemsCajaChicaNacional">
+                        <i class="bi bi-plus-lg"></i> Agregar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+     MODALES CORRECTOS PARA MIGRACIÓN
+     AGREGAR AL FINAL DEL CSHTML ANTES DEL ÚLTIMO </div>
+     ========================================== -->
+    <!-- MODAL 1: SELECCIÓN DE ACTIVIDADES PARA MIGRAR -->
+    <div class="modal fade" id="modalSeleccionActividades" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">
+                        <i class="bi bi-arrow-repeat"></i> Seleccionar Actividades para Migración
+                    </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info" role="alert">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Instrucciones:</strong> Seleccione las actividades operativas que desea migrar a otros años.
+                    </div>
+
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Lista de Actividades Operativas</legend>
+
+                        <div class="table-responsive" style="max-height: 400px;">
+                            <table class="table table-striped table-hover table-sm">
+                                <thead class="thead-uarm sticky-top">
+                                    <tr>
+                                        <th style="width: 50px;">
+                                            <input type="checkbox" id="chkTodosMigracion" style="cursor: pointer;">
+                                        </th>
+                                        <th>Año</th>
+                                        <th>Código</th>
+                                        <th>Denominación</th>
+                                        <th>Unidad Medida</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyListaActividadesMigracion">
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted">
+                                            Cargando actividades...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnContinuarMigracion" class="btn btn-primary">
+                        <i class="bi bi-arrow-right-circle"></i> Continuar con Migración
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: SELECCIÓN DE AÑOS DESTINO -->
+    <div class="modal fade" id="modalSeleccionAnios" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">
+                        <i class="bi bi-calendar-check"></i> Seleccionar Años Destino
+                    </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info" role="alert">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Actividades seleccionadas:</strong> <span id="spanCantidadActividades">0</span>
+                    </div>
+
+                    <fieldset class="border rounded-3 p-3 mb-3">
+                        <legend class="float-none w-auto px-3">Actividades a Migrar</legend>
+                        <div class="table-responsive" style="max-height: 150px;">
+                            <table class="table table-sm table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Año Origen</th>
+                                        <th>Código</th>
+                                        <th>Denominación</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyActividadesSeleccionadas"></tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Seleccione los Años Destino</legend>
+                        <div id="divAniosDestinoMigracion" class="row">
+                            <div class="col-12 text-muted text-center p-3">
+                                Cargando años disponibles...
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnEjecutarMigracionModal" class="btn btn-primary">
+                        <i class="bi bi-arrow-repeat"></i> Migrar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: CONFIRMACIÓN FINAL -->
+    <div class="modal fade" id="modalConfirmacionFinal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle"></i> Confirmar Migración
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-2">
+                        <strong>¿Está seguro que desea migrar las actividades seleccionadas?</strong>
+                    </p>
+                    <div id="resumenFinalMigracion" class="mt-3 p-3 bg-light rounded">
+                        <!-- Se llenará dinámicamente -->
+                    </div>
+                    <p class="mt-2 mb-0 text-muted">
+                        <small><i class="bi bi-info-circle"></i> Esta acción creará copias completas de las actividades con todas sus tareas, clasificadores, acciones y recursos.</small>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnConfirmarMigracionFinal" class="btn btn-warning">
+                        <i class="bi bi-check-circle"></i> Sí, Migrar Ahora
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ==========================================
+         MODAL PLANILLA
+         ========================================== -->
+    <div class="modal fade" id="modalPlanilla" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title">Registrar presupuesto de tarea / Planilla</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Año:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtAnioPlanilla" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Actividad operativa:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtActividadPlanilla" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Tarea:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtTareaPlanilla" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Unidad de medida:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtUnidadMedidaPlanilla" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Representativa:</label></div>
+                            <div class="col-md-9"><input type="checkbox" class="form-check-input" id="chkRepresentativaPlanilla" disabled /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Fuente de financiamiento:</label></div>
+                            <div class="col-md-9"><input type="text" class="form-control" id="txtFuentePlanilla" readonly /></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Ubigeo:</label></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtUbigeoPlanilla" readonly />
+                                <input type="hidden" id="hidTipoUbigeoPlanilla" />
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="border rounded-3 p-3 mt-3">
+                        <legend class="float-none w-auto px-3">Planilla de Personal</legend>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 80px;">Acciones</th>
+                                        <th style="width: 200px;">Nombre del Trabajador</th>
+                                        <th style="width: 150px;">Cargo</th>
+                                        <th style="width: 200px;">Clasificador</th>
+                                        <th>Enero</th>
+                                        <th>Febrero</th>
+                                        <th>Marzo</th>
+                                        <th>Abril</th>
+                                        <th>Mayo</th>
+                                        <th>Junio</th>
+                                        <th>Julio</th>
+                                        <th>Agosto</th>
+                                        <th>Setiembre</th>
+                                        <th>Octubre</th>
+                                        <th>Noviembre</th>
+                                        <th>Diciembre</th>
+                                        <th style="width: 120px;">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyPlanilla">
+                                    <tr>
+                                        <td colspan="17" class="text-center text-muted">
+                                            Cargando trabajadores...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnGrabarPlanilla">
+                        <i class="bi bi-check-lg"></i> Grabar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MODAL AGREGAR/EDITAR CLASIFICADOR
+         ========================================== -->
+    <div class="modal fade" id="modalClasificadorPlanilla" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h5 class="modal-title" id="mdlTitleClasificador">Editar Clasificador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="hidIndexTrabajadorClasificador" />
+                    <input type="hidden" id="hidIndexClasificador" />
+
+                    <!-- Información del Clasificador -->
+                    <fieldset class="border rounded-3 p-3 mb-3">
+                        <legend class="float-none w-auto px-3">Información</legend>
+
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Trabajador:</label></div>
+                            <div class="col-md-9">
+                                <p class="form-control-plaintext fw-bold" id="txtNombreTrabajadorModal">-</p>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Clasificador:</label></div>
+                            <div class="col-md-9">
+                                <p class="form-control-plaintext text-muted" id="txtClasificadorModal">-</p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Montos Mensuales -->
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Montos Mensuales</legend>
+
+                        <div class="alert alert-info" role="alert">
+                            <i class="bi bi-calculator me-2"></i>
+                            Ingrese el monto que corresponde a este clasificador para cada mes.
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Enero:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoEneroClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                            <div class="col-md-3"><label>Julio:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoJulioClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Febrero:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoFebreroClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                            <div class="col-md-3"><label>Agosto:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoAgostoClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Marzo:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoMarzoClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                            <div class="col-md-3"><label>Setiembre:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoSetiembreClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Abril:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoAbrilClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                            <div class="col-md-3"><label>Octubre:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoOctubreClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Mayo:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoMayoClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                            <div class="col-md-3"><label>Noviembre:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoNoviembreClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3"><label>Junio:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoJunioClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                            <div class="col-md-3"><label>Diciembre:</label></div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="txtMontoDiciembreClasificador" step="0.01" min="0" value="0.00" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnGrabarClasificadorModal">
+                        <i class="bi bi-check-lg"></i> Guardar
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

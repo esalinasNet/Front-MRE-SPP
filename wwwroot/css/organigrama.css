@@ -1,0 +1,45 @@
+﻿
+span {
+    background: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px !important;
+}
+
+.tf-tree {
+    font-size: 13px;
+    overflow: auto;
+}
+
+#tf-tree {
+    background: #cfe2ff; /*  #f8f9fa;*/
+}
+
+
+body {
+    background: #cfe2ff; /*  #f8f9fa;*/
+    font-family: Arial !important;
+    
+}
+
+.divFondo {
+    background: #cfe2ff; /*  #f8f9fa;*/
+}
+
+@media print {
+
+    .oculto-impresion, .oculto-impresion * {
+        display: none !important;
+    }
+
+    body {
+        background: #fff !important; /*  #f8f9fa;*/
+    }
+    .divFondo {
+        background: #fff; /*  #f8f9fa;*/
+    }
+
+    #tf-tree {
+        background: #fff; /*  #f8f9fa;*/
+    }
+}

@@ -1,0 +1,117 @@
+﻿@page
+@model MRE.Pages.mantenimiento.catalogoitemModel
+@{
+}
+ 
+<script src="~/app/services/service.catalogo.js"></script>
+<script src="~/app/services/service.catalogoitem.js"></script>
+
+<script src="~/app/pages/mantenimiento/catalogoitem.js"></script>
+ 
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="titulo">Mantenimiento Catálogo item <i class="bi-newspaper"></i></h3>
+        </div>
+    </div>
+    
+        <div class="card ">
+            <div class="card-header">
+            <div class="row listpro">
+                    <div class="col-md-4">
+                    <h5 class="titwhite">
+                            Resultados de búsqueda
+                        </h5>
+                    </div>
+                <div class="col-md-2 text-end  mt-2">
+                        <div class="p-2">
+                            <label>Seleccione catalogo: </label>
+                        </div>
+                    </div>
+                        <div class="col-md-4 text-end mt-2">
+                            <select class="form-select form-select-sm selectpicker" data-live-search="true" data-size="4" id="cboCatalogo">
+                            </select>
+                        </div>
+                <div class="col-md-2 text-end mt-2">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-sm  btn-light   accent-3" id="btnAgregar" title="Agregar nuevo">
+                                    <i class="bi bi-plus"></i> Agregar Registro
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="grid" class="table   table-hover nowrap" style="width:100%">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Descripción</th>
+                                    <th>Abreviatura</th>
+                                    <th>Código Catalogo Item</th>
+                                    <th>Detalle</th>
+                                    <th>Activo</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+    <div class="modal" id="modalRegistro" >
+        <div class="modal-dialog   modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-menu">
+                <h4 class="modal-title" id="mdlTitle">Registrar nuevo catalogo item </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+            </div>
+            <div class="modal-body">
+                <fieldset>
+                    <legend> Datos de catalogo item </legend>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Catalogo: </label>
+                                <label id="lblCatalogo"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input type="hidden" id="flagEdit">
+                            <input type="hidden" id="hcodigo">
+                            <div class="col-md-12">
+                                <label>Descripción</label>
+                                <input type="text" class="form-control" id="txtDescripcionNuevo" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Abreviatura</label>
+                                <input type="text" class="form-control" id="txtAbreviaturaCatalogo" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Detalle</label>
+                                <textarea  class="form-control" id="txtDetalle"></textarea>
+                            </div>
+                        </div>
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnGrabar" class="btn  btn-primary"><i class="bi bi-check-lg"></i> Grabar</button>
+                <button type="button" id="btnCerrar" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i> Cerrar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+</div>

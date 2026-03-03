@@ -1,0 +1,96 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>875d5d42-53eb-4eb1-ac97-61d00164d9be</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\configuracion\**" />
+    <Compile Remove="Pages\gestion\**" />
+    <Compile Remove="Pages\proyectos\**" />
+    <Compile Remove="wwwroot\app\main\**" />
+    <Compile Remove="wwwroot\app\pages\gestion\**" />
+    <Compile Remove="wwwroot\app\pages\proyectos\**" />
+    <Content Remove="Pages\configuracion\**" />
+    <Content Remove="Pages\gestion\**" />
+    <Content Remove="Pages\proyectos\**" />
+    <Content Remove="wwwroot\app\main\**" />
+    <Content Remove="wwwroot\app\pages\gestion\**" />
+    <Content Remove="wwwroot\app\pages\proyectos\**" />
+    <EmbeddedResource Remove="Pages\configuracion\**" />
+    <EmbeddedResource Remove="Pages\gestion\**" />
+    <EmbeddedResource Remove="Pages\proyectos\**" />
+    <EmbeddedResource Remove="wwwroot\app\main\**" />
+    <EmbeddedResource Remove="wwwroot\app\pages\gestion\**" />
+    <EmbeddedResource Remove="wwwroot\app\pages\proyectos\**" />
+    <None Remove="Pages\configuracion\**" />
+    <None Remove="Pages\gestion\**" />
+    <None Remove="Pages\proyectos\**" />
+    <None Remove="wwwroot\app\main\**" />
+    <None Remove="wwwroot\app\pages\gestion\**" />
+    <None Remove="wwwroot\app\pages\proyectos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\mantenimiento\organismo.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\mantenimiento\organismo.cshtml" />
+    <Content Remove="wwwroot\app\services\service.cargo.js" />
+    <Content Remove="wwwroot\app\services\service.cargoestructural.js" />
+    <Content Remove="wwwroot\app\services\service.cargoestructuraldetalle.js" />
+    <Content Remove="wwwroot\app\services\service.clasificacionpersonal.js" />
+    <Content Remove="wwwroot\app\services\service.clasificaciontipo.js" />
+    <Content Remove="wwwroot\app\services\service.estructuraorganizacional.js" />
+    <Content Remove="wwwroot\app\services\service.grupopaisesatencion.js" />
+    <Content Remove="wwwroot\app\services\service.plazaspersonal.js" />
+    <Content Remove="wwwroot\app\services\service.plazaspersonalhistorial.js" />
+    <Content Remove="wwwroot\app\services\service.proyectocargoclasificacion.js" />
+    <Content Remove="wwwroot\app\services\service.proyectocargofuncion.js" />
+    <Content Remove="wwwroot\app\services\service.proyectocargorequisito.js" />
+    <Content Remove="wwwroot\app\services\service.proyectoeo.js" />
+    <Content Remove="wwwroot\app\services\service.proyectoeodetalle.js" />
+    <Content Remove="wwwroot\app\services\service.proyectomcc.js" />
+    <Content Remove="wwwroot\app\services\service.proyectomccdetalle.js" />
+    <Content Remove="wwwroot\app\services\service.tipoclasificacion.js" />
+    <Content Remove="wwwroot\app\services\service.tipoclasificacionpais.js" />
+    <Content Remove="wwwroot\app\services\service.tipoclasificacionseguimiento.js" />
+    <Content Remove="wwwroot\app\services\service.unidad.js" />
+    <Content Remove="wwwroot\app\services\service.unidadorganica.js" />
+    <Content Remove="wwwroot\images\app\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\app\logo.png" />
+    <None Include="wwwroot\images\logo.png" />
+    <None Include="wwwroot\lib\crypto-js\4.1.1\crypto-js-min.js" />
+    <None Include="wwwroot\lib\crypto-js\src\core.js" />
+    <None Include="wwwroot\lib\crypto-js\src\md5.js" />
+    <None Include="wwwroot\lib\pdf.js\pdf.js" />
+    <None Include="wwwroot\lib\pdf.js\pdf.js.map" />
+    <None Include="wwwroot\lib\pdf.js\pdf.sandbox.js" />
+    <None Include="wwwroot\lib\pdf.js\pdf.sandbox.js.map" />
+    <None Include="wwwroot\lib\pdf.js\pdf.worker.js" />
+    <None Include="wwwroot\lib\pdf.js\pdf.worker.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\app\services\service.cargoestructuraldetalle.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Analyzers" Version="8.0.0-preview.7.23375.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Analyzers" Version="3.0.0-preview3-19153-02" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0-preview1.23165.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\tree\" />
+  </ItemGroup>
+
+</Project>

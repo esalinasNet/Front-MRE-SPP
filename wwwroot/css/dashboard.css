@@ -1,0 +1,486 @@
+body {
+  font-size: .875rem;
+  font-family: "Rajdhani";
+}
+.fotocol{
+      border-right: solid 10px #EB1E23;
+
+}
+
+
+.form-label-login{
+  margin-bottom: 0.5rem;
+  font-family: 'Rajdhani';
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.btn-login{
+ font-size: 20px;
+    width: 300px;
+    background-color: #bf0909;
+    border: 0;
+    color: #ffffff;
+    font-family: 'Rajdhani';
+}
+
+.imagenlogin{
+  border-right: solid 8px #bf0909;
+}
+
+.fondologin {
+  background-image: url('img/mrecentral.jpg');
+  background-position: center center;
+  background-size: cover;
+  height: 100vh; /* asegura que la sección ocupe toda la pantalla verticalmente */
+}
+
+.fondologin::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* establece el color de fondo y la opacidad */
+}
+.titsiglas{
+   font-family: "Rajdhani";
+  font-weight: bold;
+  font-size: 60px;
+  color:#EB1E23;
+  margin-top: 10px;
+}
+
+.titlogin1{
+  font-family: "Rajdhani";
+  font-weight: bold;
+  font-size: 35px;
+  color:#58595B;
+  margin-top: 10px;
+  line-height: 35px;
+}
+.titlogin2{
+  font-family: "Rajdhani";
+  font-weight: bold;
+  font-size: 20px;
+  color:#58595B;
+}
+
+.login-campos{
+      padding: 80px 15px;
+}
+
+.text-user {
+    --bs-text-opacity: 0;
+    color: black;
+    font-weight: 500;
+    font-family: 'Rajdhani';
+    font-size: 18px;
+}
+
+.navbar-nav .dropdown-menu {
+    position: absolute;
+}
+
+.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+
+.bi-creditaciones::before {
+    content: "\F4D3";
+    color: #bf0909;
+}
+
+a.nav-link.px-0.align-middle.embajadalink {
+    font-family: 'Rajdhani';
+    color: black !important;
+    margin-right: 29px;
+    font-size: 18px;
+}
+
+.bi-calidadmigratoria::before {
+    content: "\F3EE";
+    color: #bf0909;
+}
+
+.bi-identidad::before {
+    content: "\F8C9";
+    color: #bf0909;
+}
+
+.bi-importacion::before {
+    content: "\F7E0";
+    color: #bf0909;
+}
+
+.bi-embajada::before {
+    content: "\F62E";
+    color: #bf0909;
+}
+
+.bi-placa::before {
+    content: "\F785";
+    color: #bf0909;
+}
+
+.mx-1 {
+    margin-right: 0.25rem!important;
+    margin-left: 0.6rem!important;
+}
+
+.pb-4 {
+    padding-bottom: 0rem!important;
+    margin: 20px;
+}
+
+ul#menu {
+    margin: -10px 0px 0px 20px;
+}
+
+ul#submenu1 {
+    padding-left: 30px;
+}
+ul#submenu2 {
+    padding-left: 30px;
+}
+ul#submenu3 {
+    padding-left: 30px;
+}
+
+.btnregistrar {
+  display: inline-block;
+  margin-right: 20px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.columderechavacia{
+  height: 125px
+}
+
+.search-box {
+  height: 30px;
+  width: 250px;
+}
+
+.searchdiv{
+  margin-right: 20px;
+
+}
+
+.img-thumbnail{
+  margin-bottom: 5px;
+  width: 120px;
+}
+
+.g-3, .gy-3 {
+    --bs-gutter-y: 1.5rem;
+}
+.foto-profile{
+  text-align: left;
+}
+
+.subtituloscat{
+    color: #ffffff;
+    text-align: left;
+    padding: 8px 0px 3px 15px;
+    background-color: #004773;
+    margin-bottom: 15px;
+    border-radius: 6px;
+}
+
+.form-control.valid {
+  border: 1px solid #28a745;
+}
+
+.date-valid {
+  border: 1px solid #ccc;
+}
+
+
+.input-group-text.valid {
+  border-color: #BFBD1D !important;
+}
+
+.valid {
+  border-color: #BFBD1D !important;
+}
+
+
+.input-group-addon {
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-left: none;
+  padding: 6px 12px;
+}
+
+.nav-link {
+   
+    color: #707070 !important;
+  }
+
+.shadow {
+    border-bottom: solid #bf0909 4px !important;
+    box-shadow: 0rem 0rem rgba(0,0,0,.15)!important;
+}
+
+.flex-column {
+    padding-top: 0px;
+}
+    
+
+.navbar-brand {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    background-color: #ffffff !important;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.bg-dark {
+    --bs-bg-opacity: 1;
+    background-color: #ffffff !important;
+}
+
+
+
+.tit{
+     color: #bf0909;
+    font-size: 27px;
+    font-weight: 400;
+    font-family: 'Oswald';
+}
+
+.titulo{
+  font-family: "Oswald";
+    font-weight: 400;
+    font-size: 35px;
+    color: #bf0909;
+    text-align: left;
+ 
+}
+.sidebar .nav-link {
+    font-weight: 400 !important;
+    color: #333;
+    /* font-family: Lato; */
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  /* rtl:raw:
+  right: 0;
+  */
+  bottom: 0;
+  /* rtl:remove */
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 48px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+@media (max-width: 767.98px) {
+
+.titulo{
+  font-family: "Oswald";
+    font-weight: 700;
+    font-size: 25px;
+    color: #bf0909;
+    text-align: right;
+}
+
+
+  .sidebar {
+    top: 5rem;
+  }
+}
+
+
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #727272;
+}
+
+.sidebar .nav-link.active {
+  color: #2470dc;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .navbar-toggler {
+  top: .25rem;
+  right: 1rem;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+
+@media (max-width: 1060px) {
+
+.titulo{
+  font-family: "Oswald";
+    font-weight: 700;
+    font-size: 25px;
+    color: #bf0909;
+    text-align: right;
+}
+
+}
+
+@media (min-width: 768px) {
+
+.col-lg-10 {
+    flex: 0 0 auto;
+    width: 64.333333%;
+}
+
+.col-lg-2 {
+    flex: 0 0 auto;
+    width: 36.666667%;
+}
+
+}
+
+@media (max-width:767px){
+.titulo {
+    font-family: "Oswald";
+    font-weight: 700;
+    font-size: 25px;
+    color: #bf0909;
+    te: ;
+    text-align: right;
+    margin: 16px 72px;
+}
+}
+
+@media (max-width:414px){
+  .titulo {
+    font-family: "Oswald";
+    font-weight: 700;
+    font-size: 31px;
+    color: #bf0909;
+    text-align: center;
+    padding-left: 1px;
+    line-height: 34px;
+    padding-top: 10px;
+}
+
+.navbar-nav {
+    margin: 0 auto;
+}
+
+.shadow {
+    border-bottom: solid #bf0909 4px !important;
+    box-shadow: 0rem 0rem rgba(0,0,0,.15)!important;
+    margin-top: 10px;
+}
+.sidebar {
+    top: 12rem;
+}
+.navbar .navbar-toggler {
+    top: 0.8rem;
+    right: 1rem;
+}
+.search-box {
+    height: 30px;
+    width: 100px;
+}
+.login-box{
+  padding-right: 0rem!important;
+  padding-left: 0rem!important;
+  margin: 0px 25px;
+  padding-top: 0rem!important;
+}
+.logo-login{    
+  text-align: center;
+  padding-right: 0rem!important;
+    padding-left: 0rem!important;
+}
+.login-campos {
+    padding: 35px 15px;
+}
+
+}
+.contenedorlogin{
+  padding-top: 0rem!important;
+    padding-bottom: 0rem!important;
+        margin-top: 20px !important;
+}
+
+
+.headerlogin{
+  margin-bottom: 20px !important;
+}
+.btn-login {
+    font-size: 20px;
+    width: 240px;
+    background-color: #bf0909;
+    border: 0;
+    color: #ffffff;
+    font-family: 'Rajdhani';
+    font-weight: bold;
+}
+
+.card-body.px-4.py-5.px-md-5 {
+    padding: 23px 16px 0px !important;
+}
+.forgotpass{
+  margin-bottom: 10px !important;
+}
+}

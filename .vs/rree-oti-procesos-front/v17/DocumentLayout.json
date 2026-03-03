@@ -1,0 +1,117 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\Proyectos\\Efren\\Nuevo\\oti-frontend-proceso\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{668693EC-3759-4E32-AFE8-F9142F791029}|rree-oti-procesos-front.csproj|e:\\proyectos\\efren\\nuevo\\oti-frontend-proceso\\wwwroot\\app\\pages\\programacion\\aprobacion_actividades.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{668693EC-3759-4E32-AFE8-F9142F791029}|rree-oti-procesos-front.csproj|solutionrelative:wwwroot\\app\\pages\\programacion\\aprobacion_actividades.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{668693EC-3759-4E32-AFE8-F9142F791029}|rree-oti-procesos-front.csproj|e:\\proyectos\\efren\\nuevo\\oti-frontend-proceso\\wwwroot\\app\\services\\service.programacion_actividades.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{668693EC-3759-4E32-AFE8-F9142F791029}|rree-oti-procesos-front.csproj|solutionrelative:wwwroot\\app\\services\\service.programacion_actividades.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{668693EC-3759-4E32-AFE8-F9142F791029}|rree-oti-procesos-front.csproj|e:\\proyectos\\efren\\nuevo\\oti-frontend-proceso\\wwwroot\\app\\pages\\programacion\\programacion_actividades.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{668693EC-3759-4E32-AFE8-F9142F791029}|rree-oti-procesos-front.csproj|solutionrelative:wwwroot\\app\\pages\\programacion\\programacion_actividades.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{668693EC-3759-4E32-AFE8-F9142F791029}|rree-oti-procesos-front.csproj|e:\\proyectos\\efren\\nuevo\\oti-frontend-proceso\\wwwroot\\app\\pages\\mantenimiento\\acciones.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{668693EC-3759-4E32-AFE8-F9142F791029}|rree-oti-procesos-front.csproj|solutionrelative:wwwroot\\app\\pages\\mantenimiento\\acciones.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{668693EC-3759-4E32-AFE8-F9142F791029}|rree-oti-procesos-front.csproj|e:\\proyectos\\efren\\nuevo\\oti-frontend-proceso\\pages\\programacion\\aprobaciones.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{668693EC-3759-4E32-AFE8-F9142F791029}|rree-oti-procesos-front.csproj|solutionrelative:pages\\programacion\\aprobaciones.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 2856,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "programacion_actividades.js",
+              "DocumentMoniker": "E:\\Proyectos\\Efren\\Nuevo\\oti-frontend-proceso\\wwwroot\\app\\pages\\programacion\\programacion_actividades.js",
+              "RelativeDocumentMoniker": "wwwroot\\app\\pages\\programacion\\programacion_actividades.js",
+              "ToolTip": "E:\\Proyectos\\Efren\\Nuevo\\oti-frontend-proceso\\wwwroot\\app\\pages\\programacion\\programacion_actividades.js",
+              "RelativeToolTip": "wwwroot\\app\\pages\\programacion\\programacion_actividades.js",
+              "ViewState": "AQIAAOwBAAAAAAAAAAAAAPUBAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-03T17:05:08.303Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "service.programacion_actividades.js",
+              "DocumentMoniker": "E:\\Proyectos\\Efren\\Nuevo\\oti-frontend-proceso\\wwwroot\\app\\services\\service.programacion_actividades.js",
+              "RelativeDocumentMoniker": "wwwroot\\app\\services\\service.programacion_actividades.js",
+              "ToolTip": "E:\\Proyectos\\Efren\\Nuevo\\oti-frontend-proceso\\wwwroot\\app\\services\\service.programacion_actividades.js",
+              "RelativeToolTip": "wwwroot\\app\\services\\service.programacion_actividades.js",
+              "ViewState": "AQIAAMkAAAAAAAAAAAAlwOIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-03T03:30:36.155Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "aprobacion_actividades.js",
+              "DocumentMoniker": "E:\\Proyectos\\Efren\\Nuevo\\oti-frontend-proceso\\wwwroot\\app\\pages\\programacion\\aprobacion_actividades.js",
+              "RelativeDocumentMoniker": "wwwroot\\app\\pages\\programacion\\aprobacion_actividades.js",
+              "ToolTip": "E:\\Proyectos\\Efren\\Nuevo\\oti-frontend-proceso\\wwwroot\\app\\pages\\programacion\\aprobacion_actividades.js",
+              "RelativeToolTip": "wwwroot\\app\\pages\\programacion\\aprobacion_actividades.js",
+              "ViewState": "AQIAAN4BAAAAAAAAAAAnwAECAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-01T05:10:20.118Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "aprobaciones.cshtml",
+              "DocumentMoniker": "E:\\Proyectos\\Efren\\Nuevo\\oti-frontend-proceso\\Pages\\programacion\\aprobaciones.cshtml",
+              "RelativeDocumentMoniker": "Pages\\programacion\\aprobaciones.cshtml",
+              "ToolTip": "E:\\Proyectos\\Efren\\Nuevo\\oti-frontend-proceso\\Pages\\programacion\\aprobaciones.cshtml",
+              "RelativeToolTip": "Pages\\programacion\\aprobaciones.cshtml",
+              "ViewState": "AQIAAJgAAAAAAAAAAAAQwMkAAABfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-01T05:10:28.322Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "acciones.js",
+              "DocumentMoniker": "E:\\Proyectos\\Efren\\Nuevo\\oti-frontend-proceso\\wwwroot\\app\\pages\\mantenimiento\\acciones.js",
+              "RelativeDocumentMoniker": "wwwroot\\app\\pages\\mantenimiento\\acciones.js",
+              "ToolTip": "E:\\Proyectos\\Efren\\Nuevo\\oti-frontend-proceso\\wwwroot\\app\\pages\\mantenimiento\\acciones.js",
+              "RelativeToolTip": "wwwroot\\app\\pages\\mantenimiento\\acciones.js",
+              "ViewState": "AQIAANsAAAAAAAAAAAAnwO0AAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-03T17:05:40.661Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

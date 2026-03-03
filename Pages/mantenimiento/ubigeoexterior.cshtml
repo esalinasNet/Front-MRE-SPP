@@ -1,0 +1,260 @@
+﻿@page
+@model MRE.Pages.mantenimiento.ubigeoexteriorModel
+@{
+}
+<script src="~/app/services/service.ubigeoexterior.js"></script>
+<script src="~/app/pages/mantenimiento/ubigeoexterior.js"></script>
+<style>
+    .container-fluid {
+        width: 100% !important;
+        s
+    }
+
+    .container {
+        width: 100% !important;
+    }
+</style>
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="titulo">Mantenimiento Ubigeo Exterior <i class="bi-newspaper"></i></h3>
+        </div>
+
+    </div>
+
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <div class="row">
+                    <div class="col-md-9   ">
+                        <h5 class="mb-0">
+                            Búsqueda avanzada
+                            <button class="btn btn-light btn-sm " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="bi-arrow-down-square-fill"></i>
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="col-md-3 text-end   ">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-danger  btn-sm" title="buscar" id="btnBuscar">
+                                <i class="bi-search"></i> Buscar
+                            </button>
+                            <button class="btn  btn-sm btn-dark" id="btnLimpiar">
+                                <i class="bi-arrow-clockwise"></i> Limpiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row   m-b-a">
+                        <div class="col-md-2">
+                            <label>Zone</label>
+                            <input class="form-control" type="text" id="txtZoneFiltro">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Región</label>
+                            <input class="form-control" type="text" id="txtRegionFiltro">
+                        </div>
+                        <div class="col-md-2">
+                            <label>País</label>
+                            <input class="form-control" type="text" id="txtPaisFiltro">
+                        </div>
+                        <div class="col-md-2">
+                            <label>OSE Res.</label>
+                            <input class="form-control" type="text" id="txtOSERESFiltro">
+                        </div>                        
+                        <div class="col-md-2">
+                            <label>Situación</label>
+                            <select id="cboSituacionFiltro" class="form-control">
+                                <option value="">Todos</option>
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid tablelist">
+                <div class="row listpro">
+                    <div class="col-md-6">
+                        <h5 class="titwhite">
+                            Resultados de búsqueda
+                        </h5>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-light   mt-2  btn-sm" id="btnAgregar" title="Agregar nuevo">
+                                <i class="bi bi-file-earmark-plus-fill"></i> Nuevo Registro
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="grid" class="table table-striped   table-hover nowrap" style="width:100%">
+                            <thead class="thead-uarm">
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Zone</th>
+                                    <th>Región</th>
+                                    <th>País</th>
+                                    <th>Ose</th>
+                                    <th>Tipo Misión</th>
+                                    <th>Nombre OSE</th>
+                                    <th>Moneda</th>
+                                    <th>Estado</th>
+                                    <th>Activo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-menu">
+                    <h4 class="modal-title" id="mdlTitle">Registrar nuevo</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="Cerrar ventana"></button>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3"> Datos del Ubigeo Exterior</legend>
+                        
+                        <div class="row" id="rowUbigeoZone">
+                            <input type="hidden" id="flagEdit">
+                            <input type="hidden" id="hcodigo">
+                            <div class="col-md-12">                              
+                                <label>Zone</label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtZone" />
+                                @* <select id="cboZone" class="form-control">
+                                    <option value="">Seleccione</option>
+                                </select> *@
+                            </div>
+                        </div>
+                     
+                        <div class="row" id="rowUbigeoRegion">
+                            <div class="col-md-12">                              
+                                <label>Región</label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtRegion" />
+                                @* <select id="cboRegion" class="form-control">
+                                    <option value="">Seleccione</option>
+                                </select> *@
+                            </div>
+                        </div>
+
+                        <div class="row" id="rowUbigeoPais">
+                            <div class="col-md-12">
+                                <label>País</label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtPais" />
+                                @* <select id="cboPais" class="form-control">
+                                    <option value="">Seleccione</option>
+                                </select> *@
+                            </div>
+                        </div>
+
+                        <div class="row" id="rowUbigeoOSERES">
+                            <div class="col-md-12">
+                                <label>OSE RES</label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtOSERES" />
+                                @* <select id="cboOSE" class="form-control">
+                                    <option value="">Seleccione</option>
+                                </select> *@
+                            </div>
+                        </div>
+
+                        <div class="row" id="rowUbigeoOSE">
+                            <div class="col-md-12">
+                                <label>OSE</label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtOSE" />
+                                @* <select id="cboOSE" class="form-control">
+                                <option value="">Seleccione</option>
+                                </select> *@
+                            </div>
+                        </div>
+
+                        <div class="row" id="rowUbigeoTipoMision">
+                            <div class="col-md-12">
+                                <label>Tipo Misión</label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtTipoMision" />
+                                @* <select id="cboProvincia" class="form-control">
+                                    <option value="">Seleccione</option>
+                                </select> *@
+                            </div>
+                        </div>
+
+                        <div class="row" id="rowUbigeoNombreOSE">
+                            <div class="col-md-12">
+                                <label>Nombre OSE </label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtNombreOSE" />
+                            </div>
+                        </div>
+
+                        <div class="row" id="rowUbigeoTipoMoneda">
+                            <div class="col-md-12">
+                                <label>Tipo Moneda</label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtTipoMoneda" />
+                                @* <select id="cboTipoMoneda" class="form-control">
+                                    <option value="">Seleccione</option>
+                                </select> *@
+                            </div>
+                        </div>
+
+                        <div class="row" id="rowUbigeoMon">
+                            <div class="col-md-12">
+                                <label>Moneda</label><label style="color:red">(*)</label>
+                                <input type="text" class="form-control" id="txtMon" />
+                                @* <select id="cboTipoMoneda" class="form-control">
+                                    <option value="">Seleccione</option>
+                                </select> *@
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Estado </label>
+                                <input type="text" class="form-control" id="txtEstado" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Activo</label>
+                                <select id="cboActivo" class="form-select">
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 10px">
+                            <br />
+                            <label style="color:red">Datos Obligatorios (*)</label>
+                        </div>
+                    </fieldset>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGrabar" class="btn btn-primary"><i class="bi bi-check-lg"></i> Grabar</button>
+                    <button type="button" id="btnCerrar" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
