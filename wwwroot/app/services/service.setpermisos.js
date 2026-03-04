@@ -30,7 +30,7 @@ var serviceAcceso = {
             redirect: 'follow',
             body: JSON.stringify(request)
         };
-        var datos = await fetch(`${API_URL}${metodoAcceso.route}`, requestOptions)
+        var datos = await fetch(`${API_URL}${metodoAcceso.route}/actualizar`, requestOptions)
             .then(res => res.json())
             .then(res => res)
             .catch(err => err);
