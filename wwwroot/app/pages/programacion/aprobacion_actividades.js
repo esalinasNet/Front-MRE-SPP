@@ -123,8 +123,8 @@ $(function () {
         }
 
         var anio = 990;
-        $("#txtProgramacionFiltro").val();  // de la Actividad
-        $("#txtIdCentroCostosFiltro").val();   //de la Actividad
+        $("#txtProgramacionFiltro").val("xx");  // de la Actividad
+        $("#txtIdCentroCostosFiltro").val(9999);   //de la Actividad
 
         getProgramacionActividad(anio);  //llama a la Actividad
 

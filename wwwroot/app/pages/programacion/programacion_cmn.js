@@ -287,17 +287,6 @@ function grabarCMN() {
         return;
     }
 
-    var idAnio = obtenerIdAnioDesdeLocalStorage();
-
-    if (!idAnio && ITEMS_CMN_TEMP[0] && ITEMS_CMN_TEMP[0].idAnio) {
-        idAnio = ITEMS_CMN_TEMP[0].idAnio;
-    }
-
-    if (!idAnio) {
-        alertify.error("No se pudo determinar el año del CMN");
-        return;
-    }
-
     var montosPorMes = {};
     MESES.forEach(m => montosPorMes[m.id] = 0);
 
@@ -314,18 +303,14 @@ function grabarCMN() {
 
     var usuarioCreacion = obtenerUsuarioConsulta();
 
+    // Solo enviamos los campos que el SP necesita como parámetros
     var datosCmn = {
         idProgramacionRecurso: ID_PROGRAMACION_RECURSO_ACTUAL,
         idProgramacionTareas: IDTAREAS_RECURSO,
-        idAnio: idAnio,
         idActividadOperativa: ACTIVIDAD_RECURSO_SELECCIONADA,
-        idTarea: IDTAREAS_RECURSO,
-        idUnidadMedida: null,
-        representativa: $("#chkRepresentativaCMN").prop("checked"),
-        idFuenteFinanciamiento: parseInt($("#cboFuenteFinanciamientoRecurso").val()) || null,
-        idUbigeo: parseInt($("#cboUbigeoRecurso").val()) || null,
         tipoUbigeo: parseInt($("#hidTipoUbigeoCMN").val()) || null,
 
+        // Montos mensuales
         montoEnero: montosPorMes[1] || 0,
         montoFebrero: montosPorMes[2] || 0,
         montoMarzo: montosPorMes[3] || 0,
@@ -343,6 +328,8 @@ function grabarCMN() {
         ipCreacion: "0.0.0.0",
         usuarioCreacion: usuarioCreacion
     };
+
+    console.log("→ Datos CMN a guardar:", datosCmn);
 
     serviceProgramacionCmn.insProgramacionCmn(datosCmn, headersuarm)
         .then(responseCmn => {
